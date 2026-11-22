@@ -258,13 +258,13 @@
             </button>
           </div>
         </div>
-        <!-- Table View -->
-        <div id="compTableView" class="overflow-x-auto">
-          <table class="w-full text-left border-collapse min-w-[440px]">
+        <!-- Table View (Auto-fit 100% responsive, zero horizontal scroll needed) -->
+        <div id="compTableView" class="w-full overflow-hidden">
+          <table class="w-full text-left border-collapse table-fixed text-xs sm:text-sm">
             <thead>
-              <tr class="border-b border-slate-200 dark:border-slate-800 text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-850">
-                <th class="py-3 px-4 sm:px-5 font-semibold w-2/5">Concepts</th>
-                <th class="py-3 px-4 sm:px-5 font-semibold">Remember (Key Distinction)</th>
+              <tr class="border-b border-slate-200 dark:border-slate-800 text-[11px] sm:text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-850">
+                <th class="py-2.5 px-3 sm:px-4 font-semibold w-[38%] sm:w-[32%] align-top">Concepts</th>
+                <th class="py-2.5 px-3 sm:px-4 font-semibold w-[62%] sm:w-[68%] align-top">Remember (Key Distinction)</th>
               </tr>
             </thead>
             <tbody id="comparisonsTableBody" class="divide-y divide-slate-200 dark:divide-slate-800 text-xs sm:text-sm">
@@ -1737,20 +1737,25 @@
       }
 
       if (sec.table) {
+        const isTwoCol = sec.table.headers.length === 2;
         html += `
-          <div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
-            <table class="w-full text-left border-collapse text-sm">
+          <div class="w-full rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-900">
+            <table class="w-full text-left border-collapse table-fixed text-xs sm:text-sm">
               <thead>
-                <tr class="bg-slate-100 dark:bg-slate-850 border-b border-slate-200 dark:border-slate-800 text-xs uppercase tracking-wider text-slate-600 dark:text-slate-300">
-                  ${sec.table.headers.map(h => `<th class="py-2.5 px-4 font-semibold">${h}</th>`).join('')}
+                <tr class="bg-slate-100 dark:bg-slate-850 border-b border-slate-200 dark:border-slate-800 text-[11px] sm:text-xs uppercase tracking-wider text-slate-600 dark:text-slate-300">
+                  ${sec.table.headers.map((h, idx) => `
+                    <th class="py-2.5 px-3 sm:px-4 font-semibold align-top ${isTwoCol ? (idx === 0 ? 'w-[38%] sm:w-[32%]' : 'w-[62%] sm:w-[68%]') : ''}">
+                      ${h}
+                    </th>
+                  `).join('')}
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
                 ${sec.table.rows.map(row => `
-                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-850/50">
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-850/50 transition">
                     ${row.map((cell, idx) => `
-                      <td class="py-2.5 px-4 ${idx === 0 ? 'font-semibold text-slate-900 dark:text-white' : 'text-slate-600 dark:text-slate-300'}">
-                        ${isCliOrCode(cell) ? `<code class="font-mono text-xs px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-blue-600 dark:text-blue-400 border border-slate-200 dark:border-slate-700">${cell}</code>` : cell}
+                      <td class="py-2.5 px-3 sm:px-4 align-top break-words leading-relaxed ${idx === 0 ? 'font-semibold text-slate-900 dark:text-white' : 'text-slate-600 dark:text-slate-300'}">
+                        ${isCliOrCode(cell) ? `<code class="font-mono text-xs px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-850 text-blue-600 dark:text-blue-400 border border-slate-200 dark:border-slate-700 break-all">${cell}</code>` : cell}
                       </td>
                     `).join('')}
                   </tr>
@@ -1835,10 +1840,10 @@
       const filteredComps = KEY_COMPARISONS.filter(c => !q || c.concepts.toLowerCase().includes(q) || c.distinction.toLowerCase().includes(q));
       compBody.innerHTML = filteredComps.length ? filteredComps.map(item => `
         <tr class="hover:bg-slate-50 dark:hover:bg-slate-850/60 transition">
-          <td class="py-3 px-5 font-semibold text-slate-900 dark:text-white">${item.concepts}</td>
-          <td class="py-3 px-5 text-slate-600 dark:text-slate-300">${item.distinction}</td>
+          <td class="py-2.5 px-3 sm:px-4 font-semibold text-slate-900 dark:text-white align-top break-words leading-snug">${item.concepts}</td>
+          <td class="py-2.5 px-3 sm:px-4 text-slate-600 dark:text-slate-300 align-top break-words leading-relaxed">${item.distinction}</td>
         </tr>
-      `).join('') : `<tr><td colspan="2" class="py-4 px-5 text-center text-slate-500">No matching comparisons found.</td></tr>`;
+      `).join('') : `<tr><td colspan="2" class="py-4 px-4 text-center text-slate-500">No matching comparisons found.</td></tr>`;
 
       const compCards = document.getElementById('compCardsView');
       if (compCards) {
