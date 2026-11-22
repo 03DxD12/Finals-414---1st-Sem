@@ -28,3 +28,4 @@ This repository hosts an interactive single-page study application (`index.html`
 1. Clone or download this repository.
 2. Open `index.html` in any modern web browser.
 3. No build tools or local servers required.
+
