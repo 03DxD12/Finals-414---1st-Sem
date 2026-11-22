@@ -8,7 +8,13 @@ Enforce the following system directives across this codebase and all future task
 
 ## [Code Quality & Efficiency]
 - Anti-Slop Policy: Zero filler, zero boilerplate wrappers, and zero placeholder comments (e.g., "// TODO"). Deliver fully functional, production-ready code.
-- Ponytail: Choose simple, direct implementations. Eliminate code bloat and unnecessary dependencies.
+- Ponytail (The Lazy Senior Dev): "The best code is the code you never wrote." Enforce the 6-Step Decision Ladder:
+  1. YAGNI: Drop unrequested extras and speculative complexity.
+  2. Reuse: Leverage existing project code first.
+  3. Stdlib: Use built-in functions.
+  4. Native Platform: Use browser/OS native capabilities.
+  5. Existing Deps: No unnecessary new dependencies.
+  6. Minimum Code: Write the shortest, cleanest functional solution.
 - Reticle & Chisle: Execute precise, targeted modifications rather than full-file overwrites.
 
 ## [Review & Standards]
