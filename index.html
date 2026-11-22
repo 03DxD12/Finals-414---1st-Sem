@@ -2,7 +2,13 @@
 <html lang="en" class="dark">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="WinServer 414" />
+  <meta name="theme-color" content="#0b1120" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="format-detection" content="telephone=no" />
   <title>Windows Server Administration - Exam Reviewer</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -28,10 +34,27 @@
     };
   </script>
   <style>
+    :root {
+      --sat: env(safe-area-inset-top, 0px);
+      --sab: env(safe-area-inset-bottom, 0px);
+      --sal: env(safe-area-inset-left, 0px);
+      --sar: env(safe-area-inset-right, 0px);
+    }
+    html {
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      scroll-behavior: smooth;
+    }
+    /* iOS input auto-zoom prevention: inputs/selects must be at least 16px font-size on mobile */
+    @media screen and (max-width: 768px) {
+      input, select, textarea {
+        font-size: 16px !important;
+      }
+    }
     /* Custom scrollbar and 3D flashcard flip utilities */
     ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
     }
     ::-webkit-scrollbar-track {
       background: transparent;
@@ -62,86 +85,87 @@
     .no-scrollbar {
       -ms-overflow-style: none;
       scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    /* Touch tactile press effect for interactive mobile buttons */
+    .press-effect {
+      transition: transform 0.15s ease, background-color 0.15s ease;
+    }
+    .press-effect:active {
+      transform: scale(0.96);
     }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased min-h-screen flex flex-col overflow-x-hidden selection:bg-blue-600 selection:text-white">
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased min-h-screen flex flex-col overflow-x-hidden selection:bg-blue-600 selection:text-white pt-[env(safe-area-inset-top,0px)]">
 
   <!-- Top Header & Navigation -->
-  <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur border-b border-slate-200 dark:border-slate-800">
+  <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-      <div class="flex flex-col md:flex-row md:items-center md:justify-between py-2.5 sm:py-3 gap-2.5 sm:gap-3">
+      <div class="flex items-center justify-between py-2 sm:py-3 gap-2">
         <!-- Brand / Title -->
-        <div class="flex items-center justify-between gap-2">
-          <div class="flex items-center gap-2.5 min-w-0">
-            <div class="w-8 h-8 sm:w-9 sm:h-9 shrink-0 rounded-lg bg-blue-600 flex items-center justify-center text-white font-mono font-bold text-xs sm:text-sm shadow-sm">
-              WS
-            </div>
-            <div class="min-w-0">
-              <h1 class="text-sm sm:text-lg font-bold tracking-tight text-slate-900 dark:text-white leading-tight truncate">
-                Windows Server Administration
-              </h1>
-              <p class="hidden sm:block text-xs text-slate-500 dark:text-slate-400">
-                Enterprise Exam Reviewer and Practice Suite
-              </p>
-            </div>
+        <div class="flex items-center gap-2 sm:gap-2.5 min-w-0">
+          <div class="w-8 h-8 sm:w-9 sm:h-9 shrink-0 rounded-xl bg-gradient-to-tr from-blue-700 to-indigo-600 flex items-center justify-center text-white font-mono font-bold text-xs sm:text-sm shadow-sm ring-1 ring-white/10">
+            WS
           </div>
-
-          <!-- Theme Toggle Button (Mobile visible) -->
-          <button
-            id="themeToggleMobile"
-            type="button"
-            aria-label="Toggle color theme"
-            class="md:hidden shrink-0 p-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition"
-          >
-            <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-            <svg class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
-          </button>
+          <div class="min-w-0">
+            <div class="flex items-center gap-1.5">
+              <h1 class="text-sm sm:text-lg font-bold tracking-tight text-slate-900 dark:text-white leading-tight truncate">
+                Windows Server
+              </h1>
+              <span class="shrink-0 text-[10px] font-mono font-bold px-1.5 py-0.5 rounded-md bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
+                Finals 414
+              </span>
+            </div>
+            <p class="hidden sm:block text-xs text-slate-500 dark:text-slate-400">
+              Enterprise Exam Reviewer & Practice Suite
+            </p>
+          </div>
         </div>
 
-        <!-- Navigation Tabs + Desktop Theme Toggle -->
-        <div class="flex items-center justify-between md:justify-end gap-2 w-full md:w-auto">
-          <nav aria-label="Study Modes" class="grid grid-cols-2 sm:flex gap-1.5 bg-slate-100 dark:bg-slate-850 p-1 rounded-xl border border-slate-200 dark:border-slate-800 w-full md:w-auto">
-            <button data-tab="modules" class="nav-tab px-2.5 sm:px-3 py-2 sm:py-1.5 rounded-lg text-xs sm:text-sm font-medium transition text-center bg-blue-600 text-white shadow-sm whitespace-nowrap">
-              Study Modules
-            </button>
-            <button data-tab="cheatsheet" class="nav-tab px-2.5 sm:px-3 py-2 sm:py-1.5 rounded-lg text-xs sm:text-sm font-medium transition text-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white whitespace-nowrap">
-              Cheat Sheet
-            </button>
-            <button data-tab="flashcards" class="nav-tab px-2.5 sm:px-3 py-2 sm:py-1.5 rounded-lg text-xs sm:text-sm font-medium transition text-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white whitespace-nowrap">
-              Flashcards
-            </button>
-            <button data-tab="exam" class="nav-tab px-2.5 sm:px-3 py-2 sm:py-1.5 rounded-lg text-xs sm:text-sm font-medium transition text-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white whitespace-nowrap">
-              50-Item Exam
-            </button>
-          </nav>
+        <!-- Desktop Navigation Tabs (Hidden on mobile, mobile uses bottom app dock) -->
+        <nav aria-label="Study Modes" class="hidden md:flex items-center gap-1 bg-slate-100 dark:bg-slate-850 p-1 rounded-xl border border-slate-200 dark:border-slate-800">
+          <button data-tab="modules" class="nav-tab px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition text-center bg-blue-600 text-white shadow-sm whitespace-nowrap press-effect">
+            📚 Study Modules
+          </button>
+          <button data-tab="cheatsheet" class="nav-tab px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition text-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white whitespace-nowrap press-effect">
+            ⚡ Cheat Sheet
+          </button>
+          <button data-tab="flashcards" class="nav-tab px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition text-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white whitespace-nowrap press-effect">
+            🗂️ Flashcards
+          </button>
+          <button data-tab="exam" class="nav-tab px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition text-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white whitespace-nowrap press-effect">
+            📝 50-Item Exam
+          </button>
+        </nav>
 
+        <!-- Right Side Theme Toggle (Accessible on all viewports) -->
+        <div class="flex items-center gap-1.5 sm:gap-2">
           <button
-            id="themeToggleDesktop"
+            id="themeToggleBtn"
             type="button"
             aria-label="Toggle color theme"
-            class="hidden md:inline-flex shrink-0 items-center gap-1.5 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition"
+            class="shrink-0 p-2 sm:px-3 sm:py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition flex items-center gap-1.5 text-xs font-medium press-effect"
           >
             <svg class="w-4 h-4 hidden dark:block text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
             <svg class="w-4 h-4 block dark:hidden text-slate-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
-            <span class="dark:hidden">Dark</span>
-            <span class="hidden dark:inline">Light</span>
+            <span class="hidden sm:inline dark:hidden">Dark</span>
+            <span class="hidden sm:hidden dark:sm:inline">Light</span>
           </button>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- Toast / Message Box (Replaces alert) -->
-  <div id="toastNotification" class="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-5 sm:bottom-5 z-50 hidden transform transition-all duration-200">
-    <div class="bg-slate-900 dark:bg-slate-800 text-white border border-slate-700 px-4 py-2.5 rounded-xl shadow-lg flex items-center gap-2.5 text-xs sm:text-sm">
-      <span class="w-2 h-2 shrink-0 rounded-full bg-blue-400"></span>
+  <!-- Toast / Message Box (Elevated above bottom bar on mobile) -->
+  <div id="toastNotification" class="fixed bottom-20 left-3 right-3 sm:left-auto sm:right-5 sm:bottom-5 z-50 hidden transform transition-all duration-200">
+    <div class="bg-slate-900/95 dark:bg-slate-800/95 backdrop-blur text-white border border-slate-700/80 px-4 py-2.5 rounded-2xl shadow-xl flex items-center gap-2.5 text-xs sm:text-sm">
+      <span class="w-2 h-2 shrink-0 rounded-full bg-blue-400 animate-pulse"></span>
       <span id="toastText">Copied to clipboard</span>
     </div>
   </div>
 
-  <!-- Main Content Container -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6">
+  <!-- Main Content Container with safe bottom padding for mobile dock -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-6 pb-28 md:pb-8">
 
     <!-- ===================================================================== -->
     <!-- VIEW 1: STUDY MODULES (11 COMPLETE MODULES)                           -->
@@ -321,71 +345,73 @@
 
       <!-- Flashcard Stage -->
       <div class="max-w-3xl mx-auto">
-        <div id="flashcardStage" class="perspective-1000 cursor-pointer select-none" tabindex="0" role="button" aria-label="Flip flashcard">
-          <div id="flashcardInner" class="relative w-full min-h-[260px] sm:min-h-[320px] transition-transform duration-500 transform-style-3d">
+        <div id="flashcardStage" class="perspective-1000 cursor-pointer select-none touch-pan-y" tabindex="0" role="button" aria-label="Flip flashcard">
+          <div id="flashcardInner" class="relative w-full min-h-[270px] sm:min-h-[320px] transition-transform duration-500 transform-style-3d">
             <!-- Front -->
             <div class="absolute inset-0 backface-hidden bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-8 shadow-md flex flex-col justify-between">
               <div class="flex items-center justify-between gap-2">
-                <span id="fcCategoryBadge" class="text-[11px] sm:text-xs font-mono px-2.5 py-1 rounded-md bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
+                <span id="fcCategoryBadge" class="text-[11px] sm:text-xs font-mono font-semibold px-2.5 py-1 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
                   Category
                 </span>
-                <span id="fcStatusBadge" class="text-[11px] sm:text-xs font-medium px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                <span id="fcStatusBadge" class="text-[11px] sm:text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-850 text-slate-600 dark:text-slate-300">
                   Unmarked
                 </span>
               </div>
               <div class="my-auto py-4 sm:py-6 text-center">
-                <p class="text-[11px] uppercase tracking-widest text-slate-400 mb-2 sm:mb-3">Term / Scenario</p>
+                <p class="text-[11px] uppercase tracking-widest text-slate-400 mb-2 sm:mb-3 font-semibold">Term / Scenario</p>
                 <h3 id="fcFrontText" class="text-base sm:text-2xl font-bold text-slate-900 dark:text-white leading-snug">
                   Loading...
                 </h3>
               </div>
-              <div class="text-center text-xs text-slate-400">
-                Tap card to reveal answer
+              <div class="text-center text-xs text-slate-400 flex items-center justify-center gap-1.5 font-medium">
+                <span>👆 Tap to reveal answer</span>
+                <span class="sm:hidden">•</span>
+                <span class="sm:hidden">👈 Swipe card 👉</span>
               </div>
             </div>
 
             <!-- Back -->
-            <div class="absolute inset-0 backface-hidden rotate-y-180 bg-slate-900 dark:bg-slate-850 text-white border-2 border-blue-600/60 rounded-2xl p-4 sm:p-8 shadow-md flex flex-col justify-between overflow-y-auto">
+            <div class="absolute inset-0 backface-hidden rotate-y-180 bg-slate-900 dark:bg-slate-850 text-white border-2 border-blue-500/60 rounded-2xl p-4 sm:p-8 shadow-md flex flex-col justify-between overflow-y-auto">
               <div class="flex items-center justify-between gap-2">
-                <span class="text-[11px] sm:text-xs font-mono px-2.5 py-1 rounded-md bg-blue-600 text-white">
-                  ANSWER
+                <span class="text-[11px] sm:text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-blue-600 text-white shadow-sm">
+                  💡 ANSWER
                 </span>
                 <span id="fcBackCategory" class="text-[11px] sm:text-xs font-mono text-slate-400">
                   Category
                 </span>
               </div>
               <div class="my-auto py-3 sm:py-4 text-center">
-                <p id="fcBackText" class="text-sm sm:text-lg text-slate-100 leading-relaxed whitespace-pre-line">
+                <p id="fcBackText" class="text-sm sm:text-lg text-slate-100 leading-relaxed whitespace-pre-line font-medium">
                   Answer text
                 </p>
               </div>
-              <div class="text-center text-xs text-slate-400">
-                Tap card to flip back
+              <div class="text-center text-xs text-slate-400 font-medium">
+                👆 Tap to flip back
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Flashcard Controls -->
+        <!-- Flashcard Controls (Optimized 48px touch targets for mobile thumbs) -->
         <div class="mt-4 sm:mt-5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3">
           <div class="grid grid-cols-3 sm:flex items-center gap-2">
-            <button id="prevFlashcardBtn" type="button" class="px-3 sm:px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-              Previous
+            <button id="prevFlashcardBtn" type="button" class="min-h-[46px] px-3 sm:px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 transition press-effect flex items-center justify-center gap-1">
+              <span>👈</span> <span>Prev</span>
             </button>
-            <button id="flipFlashcardBtn" type="button" class="px-3 sm:px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-              Flip Card
+            <button id="flipFlashcardBtn" type="button" class="min-h-[46px] px-3 sm:px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 transition press-effect flex items-center justify-center gap-1">
+              <span>🔄</span> <span>Flip</span>
             </button>
-            <button id="nextFlashcardBtn" type="button" class="px-3 sm:px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-              Next
+            <button id="nextFlashcardBtn" type="button" class="min-h-[46px] px-3 sm:px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 transition press-effect flex items-center justify-center gap-1">
+              <span>Next</span> <span>👉</span>
             </button>
           </div>
 
           <div class="grid grid-cols-2 sm:flex items-center gap-2">
-            <button id="markNeedsReviewBtn" type="button" class="px-3 sm:px-4 py-2.5 rounded-xl bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30 text-xs sm:text-sm font-medium hover:bg-amber-500/25 transition">
-              Needs Review
+            <button id="markNeedsReviewBtn" type="button" class="min-h-[46px] px-3 sm:px-4 py-2.5 rounded-xl bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30 text-xs sm:text-sm font-semibold hover:bg-amber-500/25 transition press-effect flex items-center justify-center gap-1">
+              <span>⚠️</span> <span>Review</span>
             </button>
-            <button id="markMasteredBtn" type="button" class="px-3 sm:px-4 py-2.5 rounded-xl bg-emerald-600 text-white text-xs sm:text-sm font-medium hover:bg-emerald-500 transition shadow-sm">
-              Mark Mastered
+            <button id="markMasteredBtn" type="button" class="min-h-[46px] px-3 sm:px-4 py-2.5 rounded-xl bg-emerald-600 text-white text-xs sm:text-sm font-semibold hover:bg-emerald-500 transition shadow-sm press-effect flex items-center justify-center gap-1">
+              <span>✅</span> <span>Mastered</span>
             </button>
           </div>
         </div>
@@ -457,6 +483,18 @@
         </div>
       </div>
 
+      <!-- Sticky Mobile Score & Progress Tracker (Appears when scrolling on phones) -->
+      <div id="mobileExamStickyBar" class="sticky top-14 z-20 md:hidden bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-xl p-2.5 px-3.5 flex items-center justify-between shadow-sm">
+        <div class="flex items-center gap-1.5 text-xs">
+          <span class="text-slate-500 dark:text-slate-400">Answered:</span>
+          <span id="mobileStatAnswered" class="font-mono font-bold text-slate-900 dark:text-white">0 / 50</span>
+        </div>
+        <div class="flex items-center gap-1.5 text-xs">
+          <span class="text-slate-500 dark:text-slate-400">Score:</span>
+          <span id="mobileStatScore" class="font-mono font-bold text-blue-600 dark:text-blue-400">0%</span>
+        </div>
+      </div>
+
       <!-- Questions List -->
       <div id="examQuestionsContainer" class="space-y-3 sm:space-y-4">
         <!-- Populated by JS -->
@@ -465,8 +503,30 @@
 
   </main>
 
+  <!-- Mobile Bottom Navigation Dock (Apple iOS & Android Native App Feel) -->
+  <nav aria-label="Mobile Navigation" class="fixed bottom-0 inset-x-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg border-t border-slate-200 dark:border-slate-800 pb-[env(safe-area-inset-bottom,0px)] md:hidden shadow-xl">
+    <div class="grid grid-cols-4 max-w-md mx-auto px-1.5 py-1.5">
+      <button data-tab="modules" class="mobile-nav-btn flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition text-blue-600 dark:text-blue-400 font-bold bg-blue-50/70 dark:bg-blue-950/40 press-effect">
+        <span class="text-lg leading-none mb-0.5">📚</span>
+        <span class="text-[11px] font-semibold leading-tight tracking-tight">Modules</span>
+      </button>
+      <button data-tab="cheatsheet" class="mobile-nav-btn flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition text-slate-500 dark:text-slate-400 font-medium press-effect">
+        <span class="text-lg leading-none mb-0.5">⚡</span>
+        <span class="text-[11px] font-medium leading-tight tracking-tight">Cheats</span>
+      </button>
+      <button data-tab="flashcards" class="mobile-nav-btn flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition text-slate-500 dark:text-slate-400 font-medium press-effect">
+        <span class="text-lg leading-none mb-0.5">🗂️</span>
+        <span class="text-[11px] font-medium leading-tight tracking-tight">Cards</span>
+      </button>
+      <button data-tab="exam" class="mobile-nav-btn flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition text-slate-500 dark:text-slate-400 font-medium press-effect">
+        <span class="text-lg leading-none mb-0.5">📝</span>
+        <span class="text-[11px] font-medium leading-tight tracking-tight">50 Exam</span>
+      </button>
+    </div>
+  </nav>
+
   <!-- Footer -->
-  <footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-4 mt-10">
+  <footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-4 mt-6">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500 dark:text-slate-400">
       <span>Windows Server Administration Examination Reviewer</span>
       <span>Active Directory, WSUS, FSRM, Backup, GPO, Security, DNS, Replication, FSMO, DSRM</span>
@@ -1470,34 +1530,53 @@
     }
 
     // =========================================================================
-    // 6. THEME & TAB NAVIGATION
+    // 6. THEME & TAB NAVIGATION (DESKTOP & MOBILE DOCK)
     // =========================================================================
     function toggleTheme() {
       const html = document.documentElement;
       html.classList.toggle('dark');
     }
 
-    document.getElementById('themeToggleMobile').addEventListener('click', toggleTheme);
-    document.getElementById('themeToggleDesktop').addEventListener('click', toggleTheme);
+    const themeBtn = document.getElementById('themeToggleBtn');
+    if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
+    const themeMobile = document.getElementById('themeToggleMobile');
+    if (themeMobile) themeMobile.addEventListener('click', toggleTheme);
+    const themeDesktop = document.getElementById('themeToggleDesktop');
+    if (themeDesktop) themeDesktop.addEventListener('click', toggleTheme);
 
     function switchTab(tabName) {
       state.activeTab = tabName;
+      // Update Desktop navigation tabs
       document.querySelectorAll('.nav-tab').forEach(btn => {
         const isTarget = btn.getAttribute('data-tab') === tabName;
         if (isTarget) {
-          btn.className = 'nav-tab flex-1 md:flex-initial px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition text-center bg-blue-600 text-white shadow-sm';
+          btn.className = 'nav-tab px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition text-center bg-blue-600 text-white shadow-sm whitespace-nowrap press-effect';
         } else {
-          btn.className = 'nav-tab flex-1 md:flex-initial px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition text-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white';
+          btn.className = 'nav-tab px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition text-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white whitespace-nowrap press-effect';
+        }
+      });
+
+      // Update Mobile Bottom Dock navigation tabs
+      document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+        const isTarget = btn.getAttribute('data-tab') === tabName;
+        if (isTarget) {
+          btn.className = 'mobile-nav-btn flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition text-blue-600 dark:text-blue-400 font-bold bg-blue-50/70 dark:bg-blue-950/40 press-effect';
+        } else {
+          btn.className = 'mobile-nav-btn flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition text-slate-500 dark:text-slate-400 font-medium hover:text-slate-900 dark:hover:text-white press-effect';
         }
       });
 
       document.querySelectorAll('.view-section').forEach(sec => {
         sec.classList.add('hidden');
       });
-      document.getElementById('view-' + tabName).classList.remove('hidden');
+      const targetSec = document.getElementById('view-' + tabName);
+      if (targetSec) targetSec.classList.remove('hidden');
+
+      // Smooth scroll to top of view on viewport change
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    document.querySelectorAll('.nav-tab').forEach(btn => {
+    document.querySelectorAll('.nav-tab, .mobile-nav-btn').forEach(btn => {
       btn.addEventListener('click', () => switchTab(btn.getAttribute('data-tab')));
     });
 
@@ -1936,6 +2015,39 @@
       showToast('Flashcard progress reset');
     });
 
+    // Touch swipe gestures for Flashcards on Apple iOS & Android
+    let touchStartX = 0;
+    let touchStartY = 0;
+    const stageEl = document.getElementById('flashcardStage');
+    if (stageEl) {
+      stageEl.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+      }, { passive: true });
+
+      stageEl.addEventListener('touchend', (e) => {
+        const touchEndX = e.changedTouches[0].screenX;
+        const touchEndY = e.changedTouches[0].screenY;
+        const diffX = touchEndX - touchStartX;
+        const diffY = touchEndY - touchStartY;
+
+        // Threshold: horizontal swipe must be at least 45px and dominant over vertical scroll
+        if (Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY)) {
+          if (diffX < 0) {
+            // Swiped left -> Next Card
+            state.fcFlipped = false;
+            state.fcCurrentPos += 1;
+            renderFlashcards();
+          } else {
+            // Swiped right -> Previous Card
+            state.fcFlipped = false;
+            state.fcCurrentPos -= 1;
+            renderFlashcards();
+          }
+        }
+      }, { passive: true });
+    }
+
     // =========================================================================
     // 10. RENDER & CONTROL 50-ITEM PRACTICE EXAM (VIEW 4)
     // =========================================================================
@@ -1964,6 +2076,12 @@
       document.getElementById('statIncorrect').textContent = showResults ? `${incorrectCount}` : '--';
       const pct = answeredCount > 0 ? Math.round((correctCount / total) * 100) : 0;
       document.getElementById('statScore').textContent = showResults ? `${pct}%` : 'Pending';
+
+      // Mobile Sticky Tracker update
+      const mobileAns = document.getElementById('mobileStatAnswered');
+      if (mobileAns) mobileAns.textContent = `${answeredCount} / ${total}`;
+      const mobileSc = document.getElementById('mobileStatScore');
+      if (mobileSc) mobileSc.textContent = showResults ? `${pct}%` : 'Pending';
     }
 
     window.selectExamAnswer = function(qId, boolVal) {
@@ -2103,8 +2221,8 @@
     }
 
     function getOptionBtnClass(hasAnswered, userChoice, optionVal, correctAnswer, showFeedback, isLocked) {
-      const lockClasses = isLocked ? ' cursor-not-allowed pointer-events-none' : ' cursor-pointer';
-      const base = 'min-h-[48px] sm:min-h-[40px] px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold border transition text-center flex items-center justify-center' + lockClasses + ' ';
+      const lockClasses = isLocked ? ' cursor-not-allowed pointer-events-none' : ' cursor-pointer press-effect';
+      const base = 'min-h-[48px] sm:min-h-[42px] px-3 sm:px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border transition text-center flex items-center justify-center' + lockClasses + ' ';
       const isSelected = hasAnswered && userChoice === optionVal;
 
       if (!showFeedback) {
