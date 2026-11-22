@@ -40,3 +40,4 @@ Before writing any code or proposing an architecture, evaluate every change thro
 At the end of meaningful implementations, note:
 - **What was done**: The leanest, direct solution applied.
 - **What was skipped**: Deliberately avoided boilerplate, wrappers, or speculative logic.
+
