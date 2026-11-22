@@ -1,0 +1,2198 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Windows Server Administration - Exam Reviewer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            slate: {
+              850: '#172033',
+              950: '#0b1120',
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    /* Custom scrollbar and 3D flashcard flip utilities */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(100, 116, 139, 0.35);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(100, 116, 139, 0.55);
+    }
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+    .transform-style-3d {
+      transform-style: preserve-3d;
+    }
+    .backface-hidden {
+      backface-visibility: hidden;
+    }
+    .rotate-y-180 {
+      transform: rotateY(180deg);
+    }
+    /* Hide scrollbar for horizontal mobile nav while preserving scroll */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased min-h-screen flex flex-col overflow-x-hidden selection:bg-blue-600 selection:text-white">
+
+  <!-- Top Header & Navigation -->
+  <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur border-b border-slate-200 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between py-2.5 sm:py-3 gap-2.5 sm:gap-3">
+        <!-- Brand / Title -->
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2.5 min-w-0">
+            <div class="w-8 h-8 sm:w-9 sm:h-9 shrink-0 rounded-lg bg-blue-600 flex items-center justify-center text-white font-mono font-bold text-xs sm:text-sm shadow-sm">
+              WS
+            </div>
+            <div class="min-w-0">
+              <h1 class="text-sm sm:text-lg font-bold tracking-tight text-slate-900 dark:text-white leading-tight truncate">
+                Windows Server Administration
+              </h1>
+              <p class="hidden sm:block text-xs text-slate-500 dark:text-slate-400">
+                Enterprise Exam Reviewer and Practice Suite
+              </p>
+            </div>
+          </div>
+
+          <!-- Theme Toggle Button (Mobile visible) -->
+          <button
+            id="themeToggleMobile"
+            type="button"
+            aria-label="Toggle color theme"
+            class="md:hidden shrink-0 p-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition"
+          >
+            <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+            <svg class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+          </button>
+        </div>
+
+        <!-- Navigation Tabs + Desktop Theme Toggle -->
+        <div class="flex items-center justify-between md:justify-end gap-2 w-full md:w-auto">
+          <nav aria-label="Study Modes" class="grid grid-cols-2 sm:flex gap-1.5 bg-slate-100 dark:bg-slate-850 p-1 rounded-xl border border-slate-200 dark:border-slate-800 w-full md:w-auto">
+            <button data-tab="modules" class="nav-tab px-2.5 sm:px-3 py-2 sm:py-1.5 rounded-lg text-xs sm:text-sm font-medium transition text-center bg-blue-600 text-white shadow-sm whitespace-nowrap">
+              Study Modules
+            </button>
+            <button data-tab="cheatsheet" class="nav-tab px-2.5 sm:px-3 py-2 sm:py-1.5 rounded-lg text-xs sm:text-sm font-medium transition text-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white whitespace-nowrap">
+              Cheat Sheet
+            </button>
+            <button data-tab="flashcards" class="nav-tab px-2.5 sm:px-3 py-2 sm:py-1.5 rounded-lg text-xs sm:text-sm font-medium transition text-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white whitespace-nowrap">
+              Flashcards
+            </button>
+            <button data-tab="exam" class="nav-tab px-2.5 sm:px-3 py-2 sm:py-1.5 rounded-lg text-xs sm:text-sm font-medium transition text-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white whitespace-nowrap">
+              50-Item Exam
+            </button>
+          </nav>
+
+          <button
+            id="themeToggleDesktop"
+            type="button"
+            aria-label="Toggle color theme"
+            class="hidden md:inline-flex shrink-0 items-center gap-1.5 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition"
+          >
+            <svg class="w-4 h-4 hidden dark:block text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+            <svg class="w-4 h-4 block dark:hidden text-slate-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+            <span class="dark:hidden">Dark</span>
+            <span class="hidden dark:inline">Light</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Toast / Message Box (Replaces alert) -->
+  <div id="toastNotification" class="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-5 sm:bottom-5 z-50 hidden transform transition-all duration-200">
+    <div class="bg-slate-900 dark:bg-slate-800 text-white border border-slate-700 px-4 py-2.5 rounded-xl shadow-lg flex items-center gap-2.5 text-xs sm:text-sm">
+      <span class="w-2 h-2 shrink-0 rounded-full bg-blue-400"></span>
+      <span id="toastText">Copied to clipboard</span>
+    </div>
+  </div>
+
+  <!-- Main Content Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6">
+
+    <!-- ===================================================================== -->
+    <!-- VIEW 1: STUDY MODULES (11 COMPLETE MODULES)                           -->
+    <!-- ===================================================================== -->
+    <section id="view-modules" class="view-section space-y-4 sm:space-y-6">
+      <!-- Top Controls & Filter Bar -->
+      <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-sm">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 sm:gap-4">
+          <div>
+            <h2 class="text-base sm:text-xl font-bold text-slate-900 dark:text-white">Core Study Modules (11 Topics)</h2>
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+              Complete examination curriculum with architecture tables, university examples, troubleshooting checklists, and key notes.
+            </p>
+          </div>
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+            <div class="relative flex-1 sm:w-64">
+              <input
+                type="text"
+                id="moduleSearchInput"
+                placeholder="Filter modules or keywords..."
+                class="w-full pl-9 pr-3 py-2 text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-850 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <svg class="w-4 h-4 text-slate-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </div>
+            <div class="grid grid-cols-2 sm:flex gap-2">
+              <button id="expandAllModulesBtn" type="button" class="px-3 py-2 text-xs font-medium rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+                Expand All
+              </button>
+              <button id="collapseAllModulesBtn" type="button" class="px-3 py-2 text-xs font-medium rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+                Collapse All
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Jump Module Pills -->
+        <div id="modulePillsContainer" class="flex overflow-x-auto no-scrollbar sm:flex-wrap gap-1.5 mt-3.5 pt-3.5 border-t border-slate-200 dark:border-slate-800 pb-1 sm:pb-0">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Modules Container -->
+      <div id="modulesContainer" class="space-y-3 sm:space-y-4">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- VIEW 2: QUICK EXAM CHEAT SHEET                                        -->
+    <!-- ===================================================================== -->
+    <section id="view-cheatsheet" class="view-section hidden space-y-4 sm:space-y-6">
+      <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-sm">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+          <div>
+            <h2 class="text-base sm:text-xl font-bold text-slate-900 dark:text-white">Quick Exam Cheat Sheet</h2>
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+              High-yield distinctions, one-click copy CLI commands, critical Event IDs, and error/recovery definitions.
+            </p>
+          </div>
+          <div class="relative w-full sm:w-72">
+            <input
+              type="text"
+              id="cheatSearchInput"
+              placeholder="Search comparisons, commands, IDs..."
+              class="w-full pl-9 pr-3 py-2 text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-850 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <svg class="w-4 h-4 text-slate-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- 10 Key Comparisons Table -->
+      <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
+        <div class="px-4 sm:px-5 py-3.5 sm:py-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-850/70 flex items-center justify-between gap-2">
+          <h3 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white">Important Comparisons (10 Distinctions)</h3>
+          <span class="shrink-0 text-[11px] font-mono px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">EXAM FOCUS</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse min-w-[440px]">
+            <thead>
+              <tr class="border-b border-slate-200 dark:border-slate-800 text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-850">
+                <th class="py-3 px-4 sm:px-5 font-semibold w-2/5">Concepts</th>
+                <th class="py-3 px-4 sm:px-5 font-semibold">Remember (Key Distinction)</th>
+              </tr>
+            </thead>
+            <tbody id="comparisonsTableBody" class="divide-y divide-slate-200 dark:divide-slate-800 text-xs sm:text-sm">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- CLI Command Reference Grid -->
+      <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-sm">
+        <div class="flex items-center justify-between gap-2 mb-4">
+          <div>
+            <h3 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white">Important CLI Commands</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Tap Copy on any command to copy to clipboard</p>
+          </div>
+          <span class="shrink-0 text-[11px] font-mono px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">CLI</span>
+        </div>
+        <div id="commandsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Event IDs & Error/Recovery Concepts -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+        <!-- Event IDs Card -->
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-sm">
+          <h3 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mb-1">Important Event IDs</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Windows Security Event Log identifiers</p>
+          <div id="eventIdsList" class="space-y-3">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Error & Recovery Concepts Card -->
+        <div class="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-sm">
+          <h3 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mb-1">Important Error and Recovery Concepts</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Critical troubleshooting states, directory modes, and roles</p>
+          <div id="errorRecoveryGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- VIEW 3: INTERACTIVE FLASHCARDS                                        -->
+    <!-- ===================================================================== -->
+    <section id="view-flashcards" class="view-section hidden space-y-4 sm:space-y-6">
+      <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-sm">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4">
+          <div>
+            <h2 class="text-base sm:text-xl font-bold text-slate-900 dark:text-white">Active Recall Flashcards</h2>
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+              Tap the card or press Space to flip. Track mastered terms and filter cards that need review.
+            </p>
+          </div>
+          <div class="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2">
+            <select id="flashcardCategoryFilter" class="col-span-2 sm:col-span-1 px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-850 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option value="ALL">All Categories</option>
+              <option value="AD & OUs">AD DS & OUs</option>
+              <option value="WSUS & FSRM">WSUS & FSRM</option>
+              <option value="Backup & Shadow">Backup & Shadow Copies</option>
+              <option value="GPO & Security">GPO, Auditing & Event IDs</option>
+              <option value="DNS & Replication">DNS & AD Replication</option>
+              <option value="FSMO & DSRM">FSMO Roles & DSRM</option>
+              <option value="CLI Commands">CLI Commands</option>
+            </select>
+            <select id="flashcardStatusFilter" class="col-span-2 sm:col-span-1 px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-850 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option value="ALL">All Cards</option>
+              <option value="REVIEW">Needs Review</option>
+              <option value="MASTERED">Mastered</option>
+            </select>
+            <button id="shuffleFlashcardsBtn" type="button" class="px-3 py-2 text-xs sm:text-sm font-medium rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+              Shuffle Deck
+            </button>
+            <button id="resetFlashcardProgressBtn" type="button" class="px-3 py-2 text-xs sm:text-sm font-medium rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-rose-600 dark:text-rose-400 transition">
+              Reset Progress
+            </button>
+          </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="mt-4 pt-3.5 border-t border-slate-200 dark:border-slate-800">
+          <div class="flex items-center justify-between text-xs font-medium mb-1.5">
+            <span id="flashcardProgressLabel" class="text-slate-600 dark:text-slate-300">Mastered: 0 of 0 cards</span>
+            <span id="flashcardIndexLabel" class="font-mono text-slate-500 dark:text-slate-400">Card 1 / 0</span>
+          </div>
+          <div class="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+            <div id="flashcardProgressBar" class="h-full bg-blue-600 transition-all duration-300" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Flashcard Stage -->
+      <div class="max-w-3xl mx-auto">
+        <div id="flashcardStage" class="perspective-1000 cursor-pointer select-none" tabindex="0" role="button" aria-label="Flip flashcard">
+          <div id="flashcardInner" class="relative w-full min-h-[260px] sm:min-h-[320px] transition-transform duration-500 transform-style-3d">
+            <!-- Front -->
+            <div class="absolute inset-0 backface-hidden bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-8 shadow-md flex flex-col justify-between">
+              <div class="flex items-center justify-between gap-2">
+                <span id="fcCategoryBadge" class="text-[11px] sm:text-xs font-mono px-2.5 py-1 rounded-md bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
+                  Category
+                </span>
+                <span id="fcStatusBadge" class="text-[11px] sm:text-xs font-medium px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                  Unmarked
+                </span>
+              </div>
+              <div class="my-auto py-4 sm:py-6 text-center">
+                <p class="text-[11px] uppercase tracking-widest text-slate-400 mb-2 sm:mb-3">Term / Scenario</p>
+                <h3 id="fcFrontText" class="text-base sm:text-2xl font-bold text-slate-900 dark:text-white leading-snug">
+                  Loading...
+                </h3>
+              </div>
+              <div class="text-center text-xs text-slate-400">
+                Tap card to reveal answer
+              </div>
+            </div>
+
+            <!-- Back -->
+            <div class="absolute inset-0 backface-hidden rotate-y-180 bg-slate-900 dark:bg-slate-850 text-white border-2 border-blue-600/60 rounded-2xl p-4 sm:p-8 shadow-md flex flex-col justify-between overflow-y-auto">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-[11px] sm:text-xs font-mono px-2.5 py-1 rounded-md bg-blue-600 text-white">
+                  ANSWER
+                </span>
+                <span id="fcBackCategory" class="text-[11px] sm:text-xs font-mono text-slate-400">
+                  Category
+                </span>
+              </div>
+              <div class="my-auto py-3 sm:py-4 text-center">
+                <p id="fcBackText" class="text-sm sm:text-lg text-slate-100 leading-relaxed whitespace-pre-line">
+                  Answer text
+                </p>
+              </div>
+              <div class="text-center text-xs text-slate-400">
+                Tap card to flip back
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flashcard Controls -->
+        <div class="mt-4 sm:mt-5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3">
+          <div class="grid grid-cols-3 sm:flex items-center gap-2">
+            <button id="prevFlashcardBtn" type="button" class="px-3 sm:px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+              Previous
+            </button>
+            <button id="flipFlashcardBtn" type="button" class="px-3 sm:px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+              Flip Card
+            </button>
+            <button id="nextFlashcardBtn" type="button" class="px-3 sm:px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+              Next
+            </button>
+          </div>
+
+          <div class="grid grid-cols-2 sm:flex items-center gap-2">
+            <button id="markNeedsReviewBtn" type="button" class="px-3 sm:px-4 py-2.5 rounded-xl bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30 text-xs sm:text-sm font-medium hover:bg-amber-500/25 transition">
+              Needs Review
+            </button>
+            <button id="markMasteredBtn" type="button" class="px-3 sm:px-4 py-2.5 rounded-xl bg-emerald-600 text-white text-xs sm:text-sm font-medium hover:bg-emerald-500 transition shadow-sm">
+              Mark Mastered
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- VIEW 4: 50-ITEM PRACTICE EXAM                                         -->
+    <!-- ===================================================================== -->
+    <section id="view-exam" class="view-section hidden space-y-4 sm:space-y-6">
+      <!-- Exam Header & Controls -->
+      <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-sm">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 sm:gap-4">
+          <div>
+            <h2 class="text-base sm:text-xl font-bold text-slate-900 dark:text-white">50-Item True / False Practice Exam</h2>
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+              One-time answer locking in Immediate Feedback mode with detailed explanations of why wrong choices are incorrect.
+            </p>
+          </div>
+
+          <div class="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-2">
+            <!-- Mode Switcher -->
+            <div class="grid grid-cols-2 sm:inline-flex rounded-xl border border-slate-300 dark:border-slate-700 p-1 bg-slate-100 dark:bg-slate-850">
+              <button id="modeImmediateBtn" type="button" class="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium bg-blue-600 text-white transition text-center">
+                Immediate Feedback
+              </button>
+              <button id="modeSimulationBtn" type="button" class="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition text-center">
+                Exam Simulation
+              </button>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <select id="examFilterSelect" class="flex-1 sm:flex-initial px-3 py-2 text-xs font-medium rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="ALL">Show All (50 Items)</option>
+                <option value="UNANSWERED">Unanswered Only</option>
+                <option value="MISSED">Missed Items Only</option>
+                <option value="CORRECT">Correct Items Only</option>
+              </select>
+
+              <button id="submitSimulationBtn" type="button" class="hidden shrink-0 px-3.5 py-2 text-xs font-semibold rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white transition shadow-sm">
+                Grade Exam
+              </button>
+
+              <button id="resetExamBtn" type="button" class="shrink-0 px-3.5 py-2 text-xs font-medium rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-rose-600 dark:text-rose-400 transition">
+                Reset Exam
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Score Dashboard Bar -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 mt-4 pt-4 border-t border-slate-200 dark:border-slate-800">
+          <div class="bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 rounded-xl p-2.5 sm:p-3">
+            <p class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400">Answered</p>
+            <p id="statAnswered" class="text-base sm:text-lg font-bold font-mono text-slate-900 dark:text-white mt-0.5">0 / 50</p>
+          </div>
+          <div class="bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 rounded-xl p-2.5 sm:p-3">
+            <p class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400">Correct</p>
+            <p id="statCorrect" class="text-base sm:text-lg font-bold font-mono text-emerald-600 dark:text-emerald-400 mt-0.5">0</p>
+          </div>
+          <div class="bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 rounded-xl p-2.5 sm:p-3">
+            <p class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400">Incorrect</p>
+            <p id="statIncorrect" class="text-base sm:text-lg font-bold font-mono text-rose-600 dark:text-rose-400 mt-0.5">0</p>
+          </div>
+          <div class="bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 rounded-xl p-2.5 sm:p-3">
+            <p class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400">Accuracy Score</p>
+            <p id="statScore" class="text-base sm:text-lg font-bold font-mono text-blue-600 dark:text-blue-400 mt-0.5">0%</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Questions List -->
+      <div id="examQuestionsContainer" class="space-y-3 sm:space-y-4">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-4 mt-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500 dark:text-slate-400">
+      <span>Windows Server Administration Examination Reviewer</span>
+      <span>Active Directory, WSUS, FSRM, Backup, GPO, Security, DNS, Replication, FSMO, DSRM</span>
+    </div>
+  </footer>
+
+  <!-- Application Data & Logic -->
+  <script>
+    // =========================================================================
+    // 1. COMPREHENSIVE STUDY MODULES DATA (ALL 11 MODULES)
+    // =========================================================================
+    const STUDY_MODULES = [
+      {
+        id: 'mod-1',
+        number: 'Module 01',
+        title: 'Active Directory and Organizational Units',
+        summary: 'Active Directory Domain Services (AD DS) is a directory service that centrally manages users, computers, groups, and network resources.',
+        sections: [
+          {
+            heading: 'Important AD DS Components',
+            table: {
+              headers: ['Component', 'Function'],
+              rows: [
+                ['Domain', 'Organizes directory objects within a domain'],
+                ['Domain Controller', 'Provides authentication and directory services'],
+                ['Organizational Unit (OU)', 'Organizes objects and supports GPO targeting and delegation'],
+                ['User Account', 'Represents an individual network user'],
+                ['Security Group', 'Groups users or computers for permission assignment']
+              ]
+            }
+          },
+          {
+            heading: 'Organizational Units (OUs)',
+            bullets: [
+              'Organize users and computers by department.',
+              'Delegate administrative responsibilities.',
+              'Apply Group Policy to selected objects.'
+            ],
+            example: {
+              title: 'University OU Structure Example',
+              body: 'A university creates separate OUs for:\n- Faculty\n- Students\n- Laboratory Computers\n- IT Administrators\nThis structure makes administration and policy management easier.'
+            }
+          },
+          {
+            heading: 'Security Groups',
+            text: 'Security groups simplify permission management. Instead of assigning permissions to every individual user, administrators assign permissions to a group.',
+            example: {
+              title: 'Shared Folder Permission Example',
+              body: 'If 50 faculty members need access to a shared folder, the administrator can create a Faculty Security Group and assign the folder permission to that group.'
+            }
+          },
+          {
+            heading: 'User Account Templates and Bulk Account Creation',
+            bullets: [
+              'A template account provides standardized account settings.',
+              'Always verify the unique username, password, and group membership of copied accounts.',
+              'Bulk account creation is useful when creating many accounts using a standard naming convention.'
+            ]
+          },
+          {
+            heading: 'Home Directories',
+            text: 'A home directory provides each user with a personal network storage location. It allows users to access their personal files from different domain-joined computers.',
+            codeExample: '\\\\FileServer\\Users\\Username'
+          }
+        ]
+      },
+      {
+        id: 'mod-2',
+        number: 'Module 02',
+        title: 'Windows Server Update Services (WSUS)',
+        summary: 'WSUS allows administrators to centrally manage, approve, and distribute Windows updates to computers within an organization.',
+        sections: [
+          {
+            heading: 'Important WSUS Functions',
+            table: {
+              headers: ['Function', 'Description'],
+              rows: [
+                ['Synchronization', 'Retrieves available updates'],
+                ['Approval', 'Authorizes updates for deployment'],
+                ['Computer Groups', 'Organizes clients for staged deployment'],
+                ['Client-side Targeting', 'Allows clients to identify their assigned WSUS group'],
+                ['Update Source Policy', 'Specifies the internal WSUS server']
+              ]
+            }
+          },
+          {
+            heading: 'Staged Update Deployment',
+            example: {
+              title: 'University 500-Computer Staged Deployment Example',
+              body: 'A university has 500 computers across five departments. The IT department must test a security update before the remaining departments receive it.\n\nRecommended process:\n1. Create WSUS computer groups.\n2. Assign IT computers to the testing group.\n3. Approve the update for the IT group.\n4. Evaluate the update.\n5. Approve it for the remaining department groups.'
+            }
+          },
+          {
+            heading: 'Important Troubleshooting Point',
+            text: 'If WSUS synchronizes and approves updates but clients still download directly from Microsoft Update, check:',
+            checklist: [
+              'Client update-source policy.',
+              'Group Policy application.',
+              'WSUS server address.',
+              'Resultant Group Policy settings.'
+            ]
+          }
+        ],
+        remember: [
+          'Synchronization retrieves updates; approval authorizes their deployment.'
+        ]
+      },
+      {
+        id: 'mod-3',
+        number: 'Module 03',
+        title: 'File Server Resource Manager (FSRM)',
+        summary: 'FSRM is a Windows Server feature used to manage file storage through quotas, file screening, and storage management tools.',
+        sections: [
+          {
+            heading: 'Quota Management',
+            text: 'A quota controls the amount of storage that users or directories can consume.',
+            table: {
+              headers: ['Quota Type', 'Description'],
+              rows: [
+                ['Hard Quota', 'Prevents storage usage beyond the configured limit'],
+                ['Soft Quota', 'Allows users to exceed the limit but can generate warnings'],
+                ['Volume Quota', 'Applies to an entire volume'],
+                ['Directory Quota', 'Applies to a specific folder']
+              ]
+            },
+            example: {
+              title: 'Quota Configuration Examples',
+              body: 'Example 1: Soft Quota\nA department has a 10 GB storage allocation. Users may exceed the limit, but the administrator wants to receive warning notifications.\nSolution: Configure a Soft Quota.\n\nExample 2: Directory Quota\nA file server contains 100 student folders. Each folder must have an independent 5 GB limit.\nSolution: Apply a separate Directory Quota to each folder.'
+            }
+          },
+          {
+            heading: 'Quota Templates',
+            text: 'Quota templates allow administrators to reuse predefined storage limits and warning thresholds across multiple directories.'
+          },
+          {
+            heading: 'File Screening',
+            text: 'File screening restricts the types of files that users can store in selected directories.',
+            example: {
+              title: 'University File Screening Example',
+              body: 'A university wants to prevent students from saving .mp3 and .exe files in designated shared folders.\nSolution: Configure File Screening.'
+            }
+          }
+        ],
+        remember: [
+          'Quota = controls storage consumption.',
+          'File Screening = restricts file types.',
+          'Directory Quota = limits an individual folder.',
+          'Volume Quota = limits an entire volume.'
+        ]
+      },
+      {
+        id: 'mod-4',
+        number: 'Module 04',
+        title: 'Shadow Copies and Windows Server Backup',
+        summary: 'Volume snapshots for rapid previous-version recovery versus comprehensive server backup solutions for disaster recovery.',
+        sections: [
+          {
+            heading: 'Shadow Copies',
+            text: 'Shadow Copies allow administrators and users to recover previous versions of files stored on supported volumes.',
+            bullets: [
+              'Recover accidentally modified documents.',
+              'Restore previous file versions.',
+              'Recover deleted files when an available snapshot contains them.'
+            ]
+          },
+          {
+            heading: 'Windows Server Backup',
+            text: 'Windows Server Backup provides broader backup and recovery capabilities. It can support recovery of:',
+            bullets: [
+              'Files and folders.',
+              'Volumes.',
+              'System components.',
+              'System state.'
+            ]
+          },
+          {
+            heading: 'Comparison: Shadow Copies vs. Windows Server Backup',
+            table: {
+              headers: ['Shadow Copies', 'Windows Server Backup'],
+              rows: [
+                ['Recovers previous file versions', 'Supports broader recovery'],
+                ['Uses volume snapshots', 'Creates backup copies'],
+                ['Useful for quick file recovery', 'Useful for larger recovery scenarios'],
+                ['Not a replacement for independent backups', 'Can use separate backup storage']
+              ]
+            }
+          },
+          {
+            heading: 'Important Backup Practices',
+            text: 'A university must protect research files against accidental deletion, ransomware, and server failure. Recommended practices:',
+            orderedList: [
+              'Schedule regular backups.',
+              'Store backups separately from the original server.',
+              'Document recovery procedures.',
+              'Test file restoration.',
+              'Verify backup results.'
+            ]
+          }
+        ],
+        remember: [
+          'A successful backup job does not guarantee that the files can be restored. Restoration must be tested.'
+        ]
+      },
+      {
+        id: 'mod-5',
+        number: 'Module 05',
+        title: 'Group Policy Implementation and Verification',
+        summary: 'Group Policy allows administrators to centrally manage user and computer configurations within a Windows domain.',
+        sections: [
+          {
+            heading: 'Common Group Policy Applications',
+            table: {
+              headers: ['Policy', 'Purpose'],
+              rows: [
+                ['Folder Redirection', 'Stores supported user folders in a network location'],
+                ['Drive Mapping', 'Automatically connects users to network drives'],
+                ['Logon Banner', 'Displays an authorized-use message'],
+                ['Screen Saver', 'Configures screen saver behavior'],
+                ['Screen Lock', 'Requires authentication when resuming'],
+                ['Windows Update Policy', 'Configures the update source and behavior'],
+                ['Security Filtering', 'Controls which users or computers can apply a GPO']
+              ]
+            }
+          },
+          {
+            heading: 'Folder Redirection',
+            text: 'Folder Redirection stores supported user folders on a network location instead of relying only on the local computer.',
+            example: {
+              title: 'Faculty Lab Folder Redirection Example',
+              body: 'Faculty members use different laboratory computers but need access to the same Documents folder.\nSolution: Configure Folder Redirection to a file server.'
+            },
+            checklistTitle: 'If Folder Redirection does not work, check:',
+            checklist: [
+              'GPO scope.',
+              'Policy processing.',
+              'Security permissions.',
+              'Configured target path.',
+              'Resultant policy.'
+            ]
+          },
+          {
+            heading: 'Drive Mapping',
+            text: 'Drive mapping automatically connects users to network shares.',
+            example: {
+              title: 'Department Shared Drive Example',
+              body: 'Faculty members need their department\'s shared drive whenever they sign in.\nSolution: Use Group Policy Preferences to configure mapped drives.'
+            }
+          },
+          {
+            heading: 'GPO Implementation and Verification Process',
+            orderedList: [
+              'Create a GPO.',
+              'Configure the required settings.',
+              'Link it to the appropriate OU, domain, or site.',
+              'Configure security filtering.',
+              'Refresh client policies.',
+              'Verify the effective settings.'
+            ]
+          },
+          {
+            heading: 'Important Group Policy Commands',
+            table: {
+              headers: ['Command', 'Purpose'],
+              rows: [
+                ['gpupdate /force', 'Forces Group Policy refresh'],
+                ['gpresult /r', 'Displays resultant policy information'],
+                ['gpresult /h report.html', 'Generates an HTML policy report'],
+                ['rsop.msc', 'Displays Resultant Set of Policy']
+              ]
+            }
+          },
+          {
+            heading: 'GPO Troubleshooting Checklist',
+            text: 'If a GPO does not apply, examine:',
+            checklist: [
+              'GPO links.',
+              'OU placement.',
+              'Security filtering.',
+              'Permissions.',
+              'Policy precedence.',
+              'Resultant Group Policy.'
+            ]
+          }
+        ],
+        remember: [
+          'A correctly configured GPO may still fail if its scope, filtering, or permissions are incorrect.'
+        ]
+      },
+      {
+        id: 'mod-6',
+        number: 'Module 06',
+        title: 'Security Policies and Auditing',
+        summary: 'Securing domain users, workstations, and file shares through security policies, Event Viewer analysis, lockout investigation, and SACLs.',
+        sections: [
+          {
+            heading: 'Security Policies',
+            text: 'Security policies help protect domain users, computers, and network resources. Examples include:',
+            bullets: [
+              'Password requirements.',
+              'Account lockout settings.',
+              'Logon banners.',
+              'Screen saver settings.',
+              'Screen-lock requirements.',
+              'Security auditing.'
+            ]
+          },
+          {
+            heading: 'Event Viewer Logs',
+            text: 'Event Viewer records system and security activities.',
+            table: {
+              headers: ['Log', 'Purpose'],
+              rows: [
+                ['Application', 'Application-related events'],
+                ['Security', 'Logon, account, and security audit events'],
+                ['System', 'Operating system and service events'],
+                ['Directory Service', 'Active Directory-related events']
+              ]
+            }
+          },
+          {
+            heading: 'Important Event IDs',
+            table: {
+              headers: ['Event ID', 'Meaning'],
+              rows: [
+                ['4624', 'Successful logon'],
+                ['4625', 'Failed logon'],
+                ['4720', 'User account created']
+              ]
+            },
+            example: {
+              title: 'Repeated Failed Logons Investigation Example',
+              body: 'A university administrator discovers repeated failed logons from one workstation.\nSolution:\n1. Check Event ID 4625.\n2. Identify the source computer.\n3. Review the account and logon details.\n4. Investigate saved credentials or suspicious activity.'
+            }
+          },
+          {
+            heading: 'Account Lockout Troubleshooting',
+            text: 'If users experience repeated account lockouts after changing passwords, outdated saved credentials may be responsible. Check:',
+            checklist: [
+              'Credential Manager.',
+              'Mapped drives.',
+              'Scheduled tasks.',
+              'Services using old credentials.',
+              'Other computers where the user previously signed in.'
+            ]
+          },
+          {
+            heading: 'Security Auditing and SACL',
+            text: 'A System Access Control List (SACL) specifies which access attempts should be recorded in the Security log. To audit access to confidential folders:',
+            orderedList: [
+              'Enable the relevant audit policy.',
+              'Open the folder\'s Advanced Security Settings.',
+              'Configure auditing entries.',
+              'Select the access events to monitor.',
+              'Review the Security log.'
+            ]
+          }
+        ],
+        remember: [
+          'File access auditing requires appropriate audit policy settings and SACL configuration.'
+        ]
+      },
+      {
+        id: 'mod-7',
+        number: 'Module 07',
+        title: 'DNS Troubleshooting',
+        summary: 'Domain Name System (DNS) translates domain names into IP addresses and helps domain-joined computers locate Domain Controllers.',
+        sections: [
+          {
+            heading: 'Common DNS-Related Problems',
+            bullets: [
+              'Workstations cannot locate Domain Controllers.',
+              'Domain logons fail.',
+              'Domain joining fails.',
+              'Active Directory replication encounters name-resolution problems.'
+            ],
+            example: {
+              title: 'IP Ping vs. Domain Service Discovery Example',
+              body: 'Scenario: A workstation can ping a Domain Controller using its IP address but cannot locate domain services.\nPossible cause: Incorrect DNS server configuration.\nSolution: Configure the workstation to use the appropriate internal DNS server.'
+            }
+          }
+        ],
+        remember: [
+          'Successful ping using an IP address does not guarantee that DNS resolution is working.'
+        ]
+      },
+      {
+        id: 'mod-8',
+        number: 'Module 08',
+        title: 'Active Directory Replication',
+        summary: 'Active Directory Replication ensures that directory changes are shared among Domain Controllers across the domain and forest.',
+        sections: [
+          {
+            heading: 'Examples of Replicated Information',
+            bullets: [
+              'New user accounts.',
+              'Password changes.',
+              'Group membership changes.',
+              'Computer account changes.',
+              'Directory object modifications.'
+            ]
+          },
+          {
+            heading: 'Common Replication Problems',
+            table: {
+              headers: ['Problem', 'Possible Cause'],
+              rows: [
+                ['DNS failure', 'Incorrect DNS configuration'],
+                ['RPC error 1722', 'RPC, firewall, or connectivity issue'],
+                ['Authentication failure', 'Kerberos or account-related problem'],
+                ['Time synchronization issue', 'Incorrect time settings'],
+                ['Replication delay', 'Network or replication scheduling problem'],
+                ['Stale Domain Controller', 'Extended period without replication']
+              ]
+            }
+          },
+          {
+            heading: 'Important Troubleshooting Tools',
+            table: {
+              headers: ['Command', 'Function'],
+              rows: [
+                ['repadmin /replsummary', 'Summarizes replication status'],
+                ['repadmin /showrepl', 'Displays replication status'],
+                ['repadmin /syncall', 'Initiates replication synchronization'],
+                ['dcdiag', 'Diagnoses Domain Controller health']
+              ]
+            }
+          },
+          {
+            heading: 'RPC Error 1722',
+            text: 'This error means that the RPC server is unavailable. Possible causes:',
+            bullets: [
+              'Firewall restrictions.',
+              'RPC service problems.',
+              'Network connectivity issues.',
+              'DNS-related problems.'
+            ]
+          },
+          {
+            heading: 'Stale Domain Controllers',
+            text: 'A Domain Controller that has been offline longer than the tombstone lifetime requires careful evaluation before reconnecting. An administrator should assess its replication state and follow the appropriate recovery procedure rather than blindly forcing replication.'
+          }
+        ],
+        remember: [
+          'Successful network communication does not guarantee successful Active Directory replication.'
+        ]
+      },
+      {
+        id: 'mod-9',
+        number: 'Module 09',
+        title: 'FSMO Roles',
+        summary: 'Flexible Single Master Operations (FSMO) are five specialized Active Directory roles assigned to Domain Controllers to prevent multi-master conflicts.',
+        sections: [
+          {
+            heading: 'The Five FSMO Roles',
+            table: {
+              headers: ['FSMO Role', 'Function'],
+              rows: [
+                ['Schema Master', 'Controls Active Directory schema changes'],
+                ['Domain Naming Master', 'Manages adding or removing domains in the forest'],
+                ['RID Master', 'Allocates RID pools to Domain Controllers'],
+                ['PDC Emulator', 'Performs important password and time-related functions'],
+                ['Infrastructure Master', 'Maintains references to objects across domains']
+              ]
+            }
+          },
+          {
+            heading: 'Transfer vs. Seizure',
+            table: {
+              headers: ['Transfer', 'Seizure'],
+              rows: [
+                ['Original role holder is available', 'Original role holder is permanently unavailable'],
+                ['Planned role movement', 'Emergency role reassignment'],
+                ['Graceful operation', 'Forced reassignment']
+              ]
+            },
+            example: {
+              title: 'FSMO Role Movement Scenarios',
+              body: 'Example 1: Scheduled Maintenance\nA Domain Controller is undergoing scheduled maintenance.\nRecommended action: Wait for the server to return or perform a planned role transfer if necessary.\n\nExample 2: Permanent Hardware Failure\nA Domain Controller holding FSMO roles is permanently destroyed.\nRecommended action: Seize the necessary roles on an available Domain Controller, clean up metadata, and verify directory health.'
+            }
+          },
+          {
+            heading: 'PDC Emulator and Time Synchronization',
+            text: 'The PDC Emulator plays an important role in the domain time hierarchy. If the PDC Emulator uses an unreliable time source, authentication and other domain operations may be affected.\nSolution: Configure the PDC Emulator to use a reliable external time source.'
+          }
+        ],
+        remember: [
+          'Do not seize FSMO roles simply because the original Domain Controller is temporarily offline.'
+        ]
+      },
+      {
+        id: 'mod-10',
+        number: 'Module 10',
+        title: 'Directory Services Restore Mode (DSRM)',
+        summary: 'Directory Services Restore Mode (DSRM) is a special startup mode used for Active Directory repair and recovery.',
+        sections: [
+          {
+            heading: 'Purpose and Common Uses',
+            text: 'DSRM allows administrators to perform recovery operations without starting Active Directory Domain Services normally. Common uses:',
+            bullets: [
+              'Restore Active Directory from backup.',
+              'Perform directory database maintenance.',
+              'Troubleshoot serious AD DS problems.',
+              'Recover a Domain Controller.'
+            ]
+          }
+        ],
+        remember: [
+          'DSRM is intended for Active Directory recovery and maintenance, not ordinary domain logon operations.'
+        ]
+      },
+      {
+        id: 'mod-11',
+        number: 'Module 11',
+        title: 'System State Backup and Recovery',
+        summary: 'System State Backup contains important Windows Server components required for system recovery. For a Domain Controller, it includes critical Active Directory-related information.',
+        sections: [
+          {
+            heading: 'Important Backup Practices',
+            orderedList: [
+              'Schedule regular backups.',
+              'Store backups separately from the original server.',
+              'Document recovery procedures.',
+              'Test restoration.',
+              'Monitor backup results.'
+            ]
+          },
+          {
+            heading: 'Important Differences Across Recovery Concepts',
+            table: {
+              headers: ['Concept', 'Purpose'],
+              rows: [
+                ['Active Directory Replication', 'Shares directory changes among DCs'],
+                ['Shadow Copies', 'Recovers previous file versions'],
+                ['Windows Server Backup', 'Provides broader backup and recovery'],
+                ['System State Backup', 'Supports critical system and AD recovery']
+              ]
+            },
+            example: {
+              title: 'University Major Active Directory Failure Strategy',
+              body: 'A university wants to prepare for a major Active Directory failure.\nRecommended strategy:\n- Maintain system-state backups.\n- Store backups independently.\n- Document recovery procedures.\n- Test restoration regularly.'
+            }
+          }
+        ],
+        remember: [
+          'Replication is not a backup.',
+          'Shadow Copies are not a substitute for independent backups.',
+          'A successful backup job does not guarantee successful restoration.',
+          'Always test recovery procedures.'
+        ]
+      }
+    ];
+
+    // =========================================================================
+    // 2. QUICK EXAM CHEAT SHEET DATA
+    // =========================================================================
+    const KEY_COMPARISONS = [
+      { concepts: 'WSUS Synchronization vs. Approval', distinction: 'Retrieve updates vs. authorize deployment' },
+      { concepts: 'OU vs. Security Group', distinction: 'Organize and target policies vs. assign permissions' },
+      { concepts: 'Hard vs. Soft Quota', distinction: 'Enforces limit vs. allows exceeding limit' },
+      { concepts: 'Volume vs. Directory Quota', distinction: 'Entire volume vs. individual folder' },
+      { concepts: 'Quota vs. File Screening', distinction: 'Storage limit vs. file-type restriction' },
+      { concepts: 'Shadow Copies vs. Windows Server Backup', distinction: 'Previous file versions vs. broader recovery' },
+      { concepts: 'GPO Link vs. Security Filtering', distinction: 'Defines policy scope vs. controls eligible users/computers' },
+      { concepts: 'FGPP vs. Domain Password Policy', distinction: 'Selected users/groups vs. domain-wide default' },
+      { concepts: 'FSMO Transfer vs. Seizure', distinction: 'Available role holder vs. permanently unavailable holder' },
+      { concepts: 'Replication vs. Backup', distinction: 'Shares directory changes vs. preserves recovery copies' }
+    ];
+
+    const CLI_COMMANDS = [
+      { cmd: 'gpupdate /force', desc: 'Forces immediate Group Policy refresh on the client or server', category: 'Group Policy' },
+      { cmd: 'gpresult /r', desc: 'Displays resultant policy summary information in the console', category: 'Group Policy' },
+      { cmd: 'gpresult /h report.html', desc: 'Generates a detailed HTML report of applied Group Policy settings', category: 'Group Policy' },
+      { cmd: 'rsop.msc', desc: 'Opens the Resultant Set of Policy graphical snap-in', category: 'Group Policy' },
+      { cmd: 'repadmin /replsummary', desc: 'Summarizes Active Directory replication status across Domain Controllers', category: 'AD Replication' },
+      { cmd: 'repadmin /showrepl', desc: 'Displays detailed replication status and partner connections', category: 'AD Replication' },
+      { cmd: 'repadmin /syncall', desc: 'Initiates replication synchronization across replication partners', category: 'AD Replication' },
+      { cmd: 'dcdiag', desc: 'Diagnoses overall Domain Controller health, DNS, and services', category: 'AD Health' },
+      { cmd: 'nslookup', desc: 'Tests DNS name resolution and queries DNS records', category: 'DNS' }
+    ];
+
+    const EVENT_IDS = [
+      { id: '4624', title: 'Successful logon', detail: 'Recorded in the Security log when a logon session is successfully created.' },
+      { id: '4625', title: 'Failed logon', detail: 'Recorded in the Security log when a logon attempt fails. Check source workstation and saved credentials.' },
+      { id: '4720', title: 'User account created', detail: 'Recorded in the Security log whenever a new user account is created in Active Directory.' }
+    ];
+
+    const ERROR_RECOVERY_CONCEPTS = [
+      { term: 'RPC 1722', meaning: 'RPC server unavailable (caused by firewall restrictions, RPC service issues, network connectivity, or DNS problems).' },
+      { term: 'DSRM', meaning: 'Directory Services Restore Mode: Special startup mode for Active Directory repair and recovery without normal AD DS startup.' },
+      { term: 'FSMO Seizure', meaning: 'Forced emergency reassignment of FSMO roles when the original role holder is permanently unavailable.' },
+      { term: 'SACL', meaning: 'System Access Control List: Defines which file or folder access attempts are audited in the Security log.' },
+      { term: 'System State Backup', meaning: 'Supports critical system and Active Directory recovery on a Domain Controller.' },
+      { term: 'PDC Emulator', meaning: 'FSMO role important for domain time synchronization and urgent password updates.' }
+    ];
+
+    // =========================================================================
+    // 3. FLASHCARDS DATA
+    // =========================================================================
+    const FLASHCARDS_DATA = [
+      { id: 1, category: 'AD & OUs', front: 'What are the three primary uses of Organizational Units (OUs)?', back: '1. Organize users and computers by department.\n2. Delegate administrative responsibilities.\n3. Apply Group Policy to selected objects.' },
+      { id: 2, category: 'AD & OUs', front: 'OU vs. Security Group: What is the key functional distinction?', back: 'Organizational Units organize objects and target GPOs/delegation.\nSecurity Groups group users or computers to assign permissions.' },
+      { id: 3, category: 'AD & OUs', front: 'What must you always verify when copying a User Account Template?', back: 'Always verify the unique username, password, and group membership of copied accounts.' },
+      { id: 4, category: 'AD & OUs', front: 'What is the standard UNC path format for a User Home Directory?', back: '\\\\FileServer\\Users\\Username\nProvides personal network storage accessible from any domain-joined computer.' },
+      { id: 5, category: 'WSUS & FSRM', front: 'WSUS Synchronization vs. Approval', back: 'Synchronization retrieves available updates from Microsoft Update.\nApproval authorizes updates for deployment to specific computer groups.' },
+      { id: 6, category: 'WSUS & FSRM', front: 'Clients bypass WSUS and download directly from Microsoft Update. What 4 items should you check?', back: '1. Client update-source policy.\n2. Group Policy application.\n3. WSUS server address.\n4. Resultant Group Policy settings.' },
+      { id: 7, category: 'WSUS & FSRM', front: 'Hard Quota vs. Soft Quota in FSRM', back: 'Hard Quota: Strictly prevents storage usage beyond the configured limit.\nSoft Quota: Allows users to exceed the limit while generating warning notifications.' },
+      { id: 8, category: 'WSUS & FSRM', front: 'Quota vs. File Screening in FSRM', back: 'Quota controls the amount of storage consumption (volume or directory).\nFile Screening restricts the specific types of files (such as .mp3 or .exe) users can store.' },
+      { id: 9, category: 'Backup & Shadow', front: 'Shadow Copies vs. Windows Server Backup', back: 'Shadow Copies use volume snapshots for quick recovery of previous file versions.\nWindows Server Backup creates independent backup copies for broader recovery (volumes, system state).' },
+      { id: 10, category: 'Backup & Shadow', front: 'Does a successful backup job guarantee that files can be restored?', back: 'No. A successful backup job does not guarantee successful restoration. Restoration procedures must be regularly tested.' },
+      { id: 11, category: 'GPO & Security', front: 'GPO Link vs. Security Filtering', back: 'GPO Link defines the policy scope (Site, Domain, or OU).\nSecurity Filtering controls which specific users or computers within that scope are eligible to apply the GPO.' },
+      { id: 12, category: 'GPO & Security', front: 'Fine-Grained Password Policy (FGPP) vs. Domain Password Policy', back: 'FGPP applies custom password/lockout rules to selected users or global security groups (cannot link directly to OUs).\nDomain Password Policy is the default domain-wide setting.' },
+      { id: 13, category: 'GPO & Security', front: 'What is a Password Settings Object (PSO) precedence rule?', back: 'A PSO with a LOWER precedence number has HIGHER priority than a PSO with a higher precedence number.' },
+      { id: 14, category: 'GPO & Security', front: 'What are Event IDs 4624, 4625, and 4720?', back: '4624: Successful logon\n4625: Failed logon\n4720: User account created' },
+      { id: 15, category: 'GPO & Security', front: 'What causes repeated account lockouts after a user changes their password?', back: 'Outdated saved credentials in Credential Manager, mapped drives, scheduled tasks, services using old credentials, or other computers where the user previously signed in.' },
+      { id: 16, category: 'GPO & Security', front: 'What two configurations are required for file access auditing?', back: '1. Enable the relevant Audit Policy.\n2. Configure System Access Control List (SACL) entries in the folder\'s Advanced Security Settings.' },
+      { id: 17, category: 'DNS & Replication', front: 'A workstation can ping a DC by IP address but cannot locate domain services. What is the cause?', back: 'Incorrect DNS server configuration on the workstation. Configure it to use the internal Active Directory DNS server.' },
+      { id: 18, category: 'DNS & Replication', front: 'What does RPC Error 1722 mean and what are its causes?', back: 'RPC server is unavailable.\nPossible causes: Firewall restrictions, RPC service problems, network connectivity issues, or DNS-related problems.' },
+      { id: 19, category: 'DNS & Replication', front: 'How should you handle a Domain Controller offline longer than the tombstone lifetime?', back: 'Evaluate its replication state carefully and follow proper recovery procedures rather than blindly forcing replication.' },
+      { id: 20, category: 'FSMO & DSRM', front: 'Name the 5 FSMO Roles and their core functions.', back: '1. Schema Master: AD schema changes\n2. Domain Naming Master: Add/remove domains in forest\n3. RID Master: Allocates RID pools to DCs\n4. PDC Emulator: Password updates and time sync\n5. Infrastructure Master: Cross-domain object references' },
+      { id: 21, category: 'FSMO & DSRM', front: 'FSMO Role Transfer vs. Seizure', back: 'Transfer: Graceful, planned movement when the original role holder is available.\nSeizure: Forced emergency reassignment when the original role holder is permanently unavailable.' },
+      { id: 22, category: 'FSMO & DSRM', front: 'What is Directory Services Restore Mode (DSRM)?', back: 'A special startup mode used for Active Directory repair, database maintenance, and backup recovery without starting AD DS normally.' },
+      { id: 23, category: 'CLI Commands', front: 'gpupdate /force vs. gpresult /h report.html', back: 'gpupdate /force refreshes Group Policy immediately.\ngpresult /h report.html generates an HTML report of applied Group Policy settings.' },
+      { id: 24, category: 'CLI Commands', front: 'repadmin /replsummary vs. dcdiag', back: 'repadmin /replsummary summarizes Active Directory replication status.\ndcdiag diagnoses overall Domain Controller health.' }
+    ];
+
+    // =========================================================================
+    // 4. 50-ITEM PRACTICE EXAM DATA (EXACT STATEMENTS + EXPLANATIONS)
+    // =========================================================================
+    const EXAM_QUESTIONS = [
+      {
+        id: 1,
+        statement: 'The Schema Master controls changes to the Active Directory schema.',
+        answer: true,
+        explanation: 'The Schema Master is the forest-wide FSMO role responsible for controlling all updates and modifications to the Active Directory schema. Answering False is wrong because no other Domain Controller can authorize schema changes.'
+      },
+      {
+        id: 2,
+        statement: 'FSRM quota templates allow administrators to reuse predefined storage configurations.',
+        answer: true,
+        explanation: 'Quota templates in File Server Resource Manager allow administrators to reuse predefined storage limits and warning thresholds across multiple directories. Answering False is wrong because templates specifically exist to standardize and reuse quota settings.'
+      },
+      {
+        id: 3,
+        statement: 'Backup restoration should be tested to verify that recovery procedures work.',
+        answer: true,
+        explanation: 'A successful backup job alone does not guarantee data recoverability; regular restoration testing is mandatory to verify recovery procedures. Answering False is wrong because untested backups may fail during a real server outage.'
+      },
+      {
+        id: 4,
+        statement: 'The dcdiag tool is used to diagnose Domain Controller health.',
+        answer: true,
+        explanation: 'The dcdiag command-line utility analyzes the state of Domain Controllers in a forest or enterprise and reports health, replication, or DNS issues. Answering False is wrong because diagnosing Domain Controller health is the exact purpose of dcdiag.'
+      },
+      {
+        id: 5,
+        statement: 'A hard quota allows users to exceed their assigned storage limit without restrictions.',
+        answer: false,
+        explanation: 'Answering True is wrong because a Hard Quota strictly blocks storage usage once the configured limit is reached. Only a Soft Quota allows users to exceed the limit while generating warning notifications.'
+      },
+      {
+        id: 6,
+        statement: 'WSUS allows administrators to centrally manage and distribute Windows updates within an organization.',
+        answer: true,
+        explanation: 'Windows Server Update Services (WSUS) provides centralized management, approval, and staged distribution of Microsoft updates. Answering False is wrong because centralized patch management is the core role of WSUS.'
+      },
+      {
+        id: 7,
+        statement: 'Update classifications determine the category of updates synchronized by WSUS.',
+        answer: true,
+        explanation: 'Update classifications (such as Security Updates, Critical Updates, and Definition Updates) define which categories of updates WSUS synchronizes. Answering False is wrong because classifications control update categories during synchronization.'
+      },
+      {
+        id: 8,
+        statement: 'FSMO role seizure is appropriate when the original role holder is permanently unavailable.',
+        answer: true,
+        explanation: 'Seizure is a forced emergency reassignment performed only when the original FSMO role holder has failed permanently and will not return. Answering False is wrong because permanent loss of a role holder requires seizing the role onto a healthy Domain Controller.'
+      },
+      {
+        id: 9,
+        statement: 'Fine-Grained Password Policies can be directly linked to Organizational Units.',
+        answer: false,
+        explanation: 'Answering True is wrong because Fine-Grained Password Policies (Password Settings Objects) cannot be linked directly to Organizational Units. They apply only to individual user accounts or global security groups.'
+      },
+      {
+        id: 10,
+        statement: 'RPC error 1722 indicates that the RPC server is unavailable.',
+        answer: true,
+        explanation: 'RPC Error 1722 specifically means "The RPC server is unavailable," commonly caused by firewall blocks, DNS issues, or network connectivity failures. Answering False is wrong because 1722 is the standard Windows error code for RPC server unavailability.'
+      },
+      {
+        id: 11,
+        statement: 'File screening is used to control the types of files users can store in designated directories.',
+        answer: true,
+        explanation: 'FSRM File Screening restricts specific file extensions (such as .mp3 or .exe) from being saved in designated shared folders. Answering False is wrong because file-type restriction is the exact function of File Screening (whereas quotas control storage size).'
+      },
+      {
+        id: 12,
+        statement: 'Time synchronization is important for authentication and Active Directory operations.',
+        answer: true,
+        explanation: 'Kerberos authentication and Active Directory replication depend heavily on accurate time synchronization managed through the PDC Emulator hierarchy. Answering False is wrong because severe clock skew causes Kerberos authentication failures.'
+      },
+      {
+        id: 13,
+        statement: 'Security groups simplify permission management by allowing administrators to assign access to groups instead of individual users.',
+        answer: true,
+        explanation: 'Assigning permissions to a Security Group rather than individual user accounts streamlines administration and reduces errors. Answering False is wrong because grouping users for permission assignment is the primary purpose of Security Groups.'
+      },
+      {
+        id: 14,
+        statement: 'A successful ping to a Domain Controller using its IP address guarantees that domain name resolution is working.',
+        answer: false,
+        explanation: 'Answering True is wrong because pinging by IP address tests only basic Layer 3 IP reachability and bypasses DNS completely. Domain name resolution can still fail even when IP ping succeeds.'
+      },
+      {
+        id: 15,
+        statement: 'The dcdiag tool is used to diagnose Domain Controller health.',
+        answer: true,
+        explanation: 'dcdiag is the primary diagnostic command for checking Domain Controller health, services, and DNS registration. Answering False is wrong because dcdiag directly tests Domain Controller health.'
+      },
+      {
+        id: 16,
+        statement: 'Directory quotas can be applied to specific folder paths without imposing the same limit on the entire volume.',
+        answer: true,
+        explanation: 'Directory Quotas target individual folders (such as giving each student folder an independent 5 GB limit) rather than restricting the entire volume. Answering False is wrong because Volume Quotas limit the whole volume, whereas Directory Quotas limit specific folders.'
+      },
+      {
+        id: 17,
+        statement: 'A GPO must have an appropriate scope and permissions to apply successfully.',
+        answer: true,
+        explanation: 'Even a properly configured GPO will fail to apply if its link scope, security filtering, or Read/Apply Group Policy permissions are misconfigured. Answering False is wrong because both scope and permissions govern GPO application.'
+      },
+      {
+        id: 18,
+        statement: 'Users can access available previous file versions through the Previous Versions feature.',
+        answer: true,
+        explanation: 'Shadow Copies surface to end users via the Previous Versions tab in file and folder properties. Answering False is wrong because Previous Versions is the built-in interface for restoring Shadow Copy snapshots.'
+      },
+      {
+        id: 19,
+        statement: 'FSMO roles should always be seized whenever a Domain Controller is temporarily offline.',
+        answer: false,
+        explanation: 'Answering True is wrong because you must never seize FSMO roles when a Domain Controller is only temporarily offline for maintenance. Wait for it to return or perform a graceful Transfer while it is online.'
+      },
+      {
+        id: 20,
+        statement: 'System State backup can be used to restore critical system components, including Active Directory data on a Domain Controller.',
+        answer: true,
+        explanation: 'On a Domain Controller, System State backup includes the Active Directory database (NTDS.dit), SYSVOL, registry, and boot files. Answering False is wrong because System State backup is specifically designed to protect AD DS and critical OS components.'
+      },
+      {
+        id: 21,
+        statement: 'SACL entries define which file and folder access events should be audited.',
+        answer: true,
+        explanation: 'A System Access Control List (SACL) specifies which success or failure access attempts are recorded in the Security event log. Answering False is wrong because SACLs control object-level audit logging.'
+      },
+      {
+        id: 22,
+        statement: 'Shadow Copies stored on the same volume provide complete protection against total volume failure.',
+        answer: false,
+        explanation: 'Answering True is wrong because Shadow Copies reside on the same volume; a total disk or volume failure destroys both the live files and their snapshots. Independent off-server backups are required.'
+      },
+      {
+        id: 23,
+        statement: 'Synchronizing updates in WSUS automatically approves all available updates for installation.',
+        answer: false,
+        explanation: 'Answering True is wrong because Synchronization only retrieves update metadata and files from Microsoft Update. Administrators must explicitly Approve updates before clients can install them.'
+      },
+      {
+        id: 24,
+        statement: 'The Domain Naming Master manages the addition and removal of domains in the forest.',
+        answer: true,
+        explanation: 'The Domain Naming Master is the forest-wide FSMO role required whenever adding or removing a domain in the forest. Answering False is wrong because controlling domain additions and removals is its exact function.'
+      },
+      {
+        id: 25,
+        statement: 'A soft quota can generate warnings when users approach or exceed the configured storage limit.',
+        answer: true,
+        explanation: 'Soft Quotas monitor storage consumption and trigger warning notifications without blocking users from saving files. Answering False is wrong because Soft Quotas are designed for monitoring and alerting.'
+      },
+      {
+        id: 26,
+        statement: 'Active Directory replication is a complete replacement for regular system-state backups.',
+        answer: false,
+        explanation: 'Answering True is wrong because replication is not a backup. Accidental deletions or directory corruption replicate across all Domain Controllers, making independent System State backups essential.'
+      },
+      {
+        id: 27,
+        statement: 'The gpupdate /force command generates an HTML report of applied Group Policy settings.',
+        answer: false,
+        explanation: 'Answering True is wrong because gpupdate /force only refreshes Group Policy settings on the computer. The command that generates an HTML report is gpresult /h report.html.'
+      },
+      {
+        id: 28,
+        statement: 'DNS helps domain-joined computers locate Domain Controllers.',
+        answer: true,
+        explanation: 'Domain-joined clients query DNS SRV records to locate Domain Controllers for authentication and directory services. Answering False is wrong because Active Directory relies directly on DNS for Domain Controller discovery.'
+      },
+      {
+        id: 29,
+        statement: 'Event ID 4720 indicates that a user account has been created.',
+        answer: true,
+        explanation: 'Event ID 4720 in the Windows Security log specifically records the creation of a new user account. Answering False is wrong because 4720 is the exact Security Event ID for user account creation.'
+      },
+      {
+        id: 30,
+        statement: 'Independent backups stored separately from the original server provide additional protection against server or volume failure.',
+        answer: true,
+        explanation: 'Storing backups on separate independent storage protects critical data against hardware failure, volume loss, and ransomware. Answering False is wrong because off-server storage is a core backup best practice.'
+      },
+      {
+        id: 31,
+        statement: 'A replication failure with error 1722 should always be corrected by recreating the Active Directory forest.',
+        answer: false,
+        explanation: 'Answering True is wrong because RPC Error 1722 is a network connectivity, firewall, RPC service, or DNS issue that is resolved by troubleshooting network and DNS settings, never by rebuilding the forest.'
+      },
+      {
+        id: 32,
+        statement: 'WSUS computer groups allow administrators to deploy updates in stages.',
+        answer: true,
+        explanation: 'Computer groups enable staged rollouts, such as testing updates on an IT group before approving them for remaining departments. Answering False is wrong because staged deployment is the primary purpose of WSUS computer groups.'
+      },
+      {
+        id: 33,
+        statement: 'Directory Services Restore Mode is used for Active Directory repair and recovery.',
+        answer: true,
+        explanation: 'DSRM boots a Domain Controller without starting AD DS normally so administrators can repair or restore the directory database. Answering False is wrong because Active Directory repair and recovery is the exact purpose of DSRM.'
+      },
+      {
+        id: 34,
+        statement: 'The nslookup command can be used to test DNS name resolution.',
+        answer: true,
+        explanation: 'nslookup queries configured DNS servers to verify forward, reverse, and SRV record resolution. Answering False is wrong because nslookup is the standard command-line tool for testing DNS resolution.'
+      },
+      {
+        id: 35,
+        statement: 'Group Policy can be used to configure screen-lock settings and logon banners.',
+        answer: true,
+        explanation: 'Both interactive logon banners and screen saver / screen-lock timeouts are standard security settings deployed via GPO. Answering False is wrong because Group Policy centrally enforces these workstation security policies.'
+      },
+      {
+        id: 36,
+        statement: 'The repadmin /replsummary command provides a summary of Active Directory replication status.',
+        answer: true,
+        explanation: 'repadmin /replsummary displays a concise overview of replication health, deltas, and errors across Domain Controllers. Answering False is wrong because summarizing replication status is the exact function of /replsummary.'
+      },
+      {
+        id: 37,
+        statement: 'Folder Redirection troubleshooting should include checking policy processing and the configured target path.',
+        answer: true,
+        explanation: 'Troubleshooting Folder Redirection requires checking GPO scope, policy processing, security permissions, configured target path, and resultant policy. Answering False is wrong because verifying policy processing and target paths is essential.'
+      },
+      {
+        id: 38,
+        statement: 'Organizational Units are primarily used to assign file permissions directly to individual users.',
+        answer: false,
+        explanation: 'Answering True is wrong because OUs organize objects for GPO targeting and administrative delegation. Security Groups (not OUs) are used to assign file and folder permissions.'
+      },
+      {
+        id: 39,
+        statement: 'Shadow Copies stored on the same volume provide complete protection against total volume failure.',
+        answer: false,
+        explanation: 'Answering True is wrong because Shadow Copies stored on the same volume are destroyed if the underlying volume or disk fails; they do not replace independent backups.'
+      },
+      {
+        id: 40,
+        statement: 'Fine-Grained Password Policies can apply to individual users or global security groups.',
+        answer: true,
+        explanation: 'Fine-Grained Password Policies apply directly to individual user accounts or global security groups. Answering False is wrong because FGPP specifically targets users and global security groups (not OUs).'
+      },
+      {
+        id: 41,
+        statement: 'Repeated account lockouts may be caused by outdated saved credentials on client computers.',
+        answer: true,
+        explanation: 'Cached credentials in Credential Manager, mapped drives, scheduled tasks, or services often continue authenticating with an old password and lock out the account. Answering False is wrong because stale saved credentials are a leading cause of repeat lockouts.'
+      },
+      {
+        id: 42,
+        statement: 'Event ID 4625 indicates a successful user logon.',
+        answer: false,
+        explanation: 'Answering True is wrong because Event ID 4625 indicates a FAILED logon attempt. Event ID 4624 is the identifier for a successful user logon.'
+      },
+      {
+        id: 43,
+        statement: 'A PSO with a lower precedence number has higher priority than a PSO with a higher precedence number.',
+        answer: true,
+        explanation: 'For Password Settings Objects (PSOs), a lower precedence value (such as 10) overrides a higher precedence value (such as 20). Answering False is wrong because lower numbers win precedence in FGPP.'
+      },
+      {
+        id: 44,
+        statement: 'DSRM starts Active Directory Domain Services normally during recovery.',
+        answer: false,
+        explanation: 'Answering True is wrong because DSRM specifically prevents Active Directory Domain Services from starting normally so the offline database can be repaired or restored.'
+      },
+      {
+        id: 45,
+        statement: 'The RID Master allocates RID pools to Domain Controllers.',
+        answer: true,
+        explanation: 'The RID Master assigns pools of Relative IDs (RIDs) to each Domain Controller so every newly created security principal receives a unique SID. Answering False is wrong because RID pool allocation is the exact role of the RID Master.'
+      },
+      {
+        id: 46,
+        statement: 'Fine-Grained Password Policies can apply to individual users or global security groups.',
+        answer: true,
+        explanation: 'FGPP targets individual user objects or global security groups rather than Organizational Units. Answering False is wrong because user accounts and global security groups are the valid targets for FGPP.'
+      },
+      {
+        id: 47,
+        statement: 'A successful backup job guarantees that all backed-up data can be restored successfully.',
+        answer: false,
+        explanation: 'Answering True is wrong because backup job completion only confirms the backup process ran; administrators must regularly test file restoration to verify recovery integrity.'
+      },
+      {
+        id: 48,
+        statement: 'A successful backup job guarantees that all backed-up data can be restored successfully.',
+        answer: false,
+        explanation: 'Answering True is wrong because you must never assume a backup is restorable without performing periodic restoration tests.'
+      },
+      {
+        id: 49,
+        statement: 'The PDC Emulator plays an important role in domain time synchronization.',
+        answer: true,
+        explanation: 'The PDC Emulator acts as the authoritative time source for the domain hierarchy and should sync with a reliable external time source. Answering False is wrong because domain time synchronization is a core responsibility of the PDC Emulator.'
+      },
+      {
+        id: 50,
+        statement: 'The gpresult /h command generates a report showing resultant Group Policy information.',
+        answer: true,
+        explanation: 'Running gpresult /h filename.html exports a comprehensive HTML report of applied Group Policy settings. Answering False is wrong because generating an HTML policy report is the exact function of gpresult /h.'
+      }
+    ];
+
+    // =========================================================================
+    // 5. STATE & INITIALIZATION
+    // =========================================================================
+    const state = {
+      activeTab: 'modules',
+      expandedModules: new Set(['mod-1']),
+      moduleSearch: '',
+      cheatSearch: '',
+      // Flashcards state
+      fcCategory: 'ALL',
+      fcStatusFilter: 'ALL',
+      fcOrder: FLASHCARDS_DATA.map((_, idx) => idx),
+      fcCurrentPos: 0,
+      fcFlipped: false,
+      fcProgress: {}, // { cardId: 'MASTERED' | 'REVIEW' }
+      // Exam state
+      examMode: 'IMMEDIATE', // 'IMMEDIATE' | 'SIMULATION'
+      simulationSubmitted: false,
+      examFilter: 'ALL',
+      userAnswers: {} // { questionId: true | false }
+    };
+
+    // Load saved progress from localStorage safely
+    try {
+      const savedFc = localStorage.getItem('ws_reviewer_fc_progress');
+      if (savedFc) state.fcProgress = JSON.parse(savedFc);
+      const savedExam = localStorage.getItem('ws_reviewer_exam_answers');
+      if (savedExam) state.userAnswers = JSON.parse(savedExam);
+    } catch (e) {
+      // Ignore storage errors in restricted environments
+    }
+
+    function saveProgress() {
+      try {
+        localStorage.setItem('ws_reviewer_fc_progress', JSON.stringify(state.fcProgress));
+        localStorage.setItem('ws_reviewer_exam_answers', JSON.stringify(state.userAnswers));
+      } catch (e) {
+        // Ignore storage errors
+      }
+    }
+
+    // Toast helper (replaces alert)
+    let toastTimer = null;
+    function showToast(message) {
+      const toast = document.getElementById('toastNotification');
+      const text = document.getElementById('toastText');
+      text.textContent = message;
+      toast.classList.remove('hidden');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 2200);
+    }
+
+    // Clipboard copy using execCommand fallback
+    function copyToClipboard(text) {
+      const tempInput = document.createElement('textarea');
+      tempInput.value = text;
+      tempInput.style.position = 'fixed';
+      tempInput.style.opacity = '0';
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      try {
+        document.execCommand('copy');
+        showToast('Copied: ' + text);
+      } catch (err) {
+        showToast('Unable to copy command');
+      }
+      document.body.removeChild(tempInput);
+    }
+
+    // =========================================================================
+    // 6. THEME & TAB NAVIGATION
+    // =========================================================================
+    function toggleTheme() {
+      const html = document.documentElement;
+      html.classList.toggle('dark');
+    }
+
+    document.getElementById('themeToggleMobile').addEventListener('click', toggleTheme);
+    document.getElementById('themeToggleDesktop').addEventListener('click', toggleTheme);
+
+    function switchTab(tabName) {
+      state.activeTab = tabName;
+      document.querySelectorAll('.nav-tab').forEach(btn => {
+        const isTarget = btn.getAttribute('data-tab') === tabName;
+        if (isTarget) {
+          btn.className = 'nav-tab flex-1 md:flex-initial px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition text-center bg-blue-600 text-white shadow-sm';
+        } else {
+          btn.className = 'nav-tab flex-1 md:flex-initial px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition text-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white';
+        }
+      });
+
+      document.querySelectorAll('.view-section').forEach(sec => {
+        sec.classList.add('hidden');
+      });
+      document.getElementById('view-' + tabName).classList.remove('hidden');
+    }
+
+    document.querySelectorAll('.nav-tab').forEach(btn => {
+      btn.addEventListener('click', () => switchTab(btn.getAttribute('data-tab')));
+    });
+
+    // =========================================================================
+    // 7. RENDER STUDY MODULES (VIEW 1)
+    // =========================================================================
+    function renderModulePills() {
+      const container = document.getElementById('modulePillsContainer');
+      container.innerHTML = STUDY_MODULES.map(mod => `
+        <button
+          type="button"
+          onclick="jumpToModule('${mod.id}')"
+          class="text-xs px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-850 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition font-medium"
+        >
+          ${mod.number.replace('Module ', 'M')}: ${mod.title.split('(')[0].trim()}
+        </button>
+      `).join('');
+    }
+
+    window.jumpToModule = function(modId) {
+      state.expandedModules.add(modId);
+      renderModules();
+      const el = document.getElementById(modId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    };
+
+    window.toggleModule = function(modId) {
+      if (state.expandedModules.has(modId)) {
+        state.expandedModules.delete(modId);
+      } else {
+        state.expandedModules.add(modId);
+      }
+      renderModules();
+    };
+
+    function renderModules() {
+      const container = document.getElementById('modulesContainer');
+      const query = state.moduleSearch.trim().toLowerCase();
+
+      const filtered = STUDY_MODULES.filter(mod => {
+        if (!query) return true;
+        const blob = JSON.stringify(mod).toLowerCase();
+        return blob.includes(query);
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 sm:p-8 text-center">
+            <p class="text-sm text-slate-500 dark:text-slate-400">No study modules match "${escapeHtml(state.moduleSearch)}".</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(mod => {
+        const isOpen = query.length > 0 || state.expandedModules.has(mod.id);
+        return `
+          <article id="${mod.id}" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm transition">
+            <!-- Accordion Header -->
+            <button
+              type="button"
+              onclick="toggleModule('${mod.id}')"
+              class="w-full px-4 sm:px-5 py-3.5 sm:py-4 flex items-center justify-between gap-3 text-left hover:bg-slate-50 dark:hover:bg-slate-850/60 transition"
+              aria-expanded="${isOpen}"
+            >
+              <div class="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-3.5 min-w-0">
+                <span class="self-start sm:self-auto shrink-0 font-mono text-[11px] sm:text-xs font-semibold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-lg bg-blue-600/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
+                  ${mod.number}
+                </span>
+                <div class="min-w-0">
+                  <h3 class="text-sm sm:text-lg font-bold text-slate-900 dark:text-white leading-snug">
+                    ${mod.title}
+                  </h3>
+                  <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-1">
+                    ${mod.summary}
+                  </p>
+                </div>
+              </div>
+              <div class="shrink-0 w-8 h-8 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-400">
+                <svg class="w-4 h-4 transform transition-transform ${isOpen ? 'rotate-180' : ''}" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </button>
+
+            <!-- Accordion Body -->
+            <div class="${isOpen ? 'block' : 'hidden'} px-4 sm:px-5 pb-5 sm:pb-6 pt-2 border-t border-slate-200 dark:border-slate-800 space-y-5 sm:space-y-6">
+              <p class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-850 p-3 sm:p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800">
+                ${mod.summary}
+              </p>
+
+              ${mod.sections.map(sec => renderModuleSection(sec)).join('')}
+
+              ${mod.remember ? `
+                <div class="rounded-xl bg-amber-500/10 border border-amber-500/30 p-3.5 sm:p-4">
+                  <div class="flex items-center gap-2 text-amber-700 dark:text-amber-300 font-bold text-xs uppercase tracking-wider mb-1.5">
+                    <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                    Remember (Exam Key Point)
+                  </div>
+                  <ul class="space-y-1 text-xs sm:text-sm text-slate-800 dark:text-slate-200 list-disc list-inside">
+                    ${mod.remember.map(item => `<li>${item}</li>`).join('')}
+                  </ul>
+                </div>
+              ` : ''}
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function renderModuleSection(sec) {
+      let html = `<div class="space-y-3">`;
+      html += `<h4 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white border-l-4 border-blue-600 pl-3">${sec.heading}</h4>`;
+
+      if (sec.text) {
+        html += `<p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed whitespace-pre-line">${sec.text}</p>`;
+      }
+
+      if (sec.codeExample) {
+        html += `
+          <div class="flex items-center justify-between bg-slate-900 text-blue-300 font-mono text-xs sm:text-sm px-4 py-3 rounded-xl border border-slate-700">
+            <span>${sec.codeExample}</span>
+            <button type="button" onclick="copyToClipboard('${sec.codeExample.replace(/\\/g, '\\\\')}')" class="text-xs px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 transition">
+              Copy
+            </button>
+          </div>
+        `;
+      }
+
+      if (sec.table) {
+        html += `
+          <div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
+            <table class="w-full text-left border-collapse text-sm">
+              <thead>
+                <tr class="bg-slate-100 dark:bg-slate-850 border-b border-slate-200 dark:border-slate-800 text-xs uppercase tracking-wider text-slate-600 dark:text-slate-300">
+                  ${sec.table.headers.map(h => `<th class="py-2.5 px-4 font-semibold">${h}</th>`).join('')}
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+                ${sec.table.rows.map(row => `
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-850/50">
+                    ${row.map((cell, idx) => `
+                      <td class="py-2.5 px-4 ${idx === 0 ? 'font-semibold text-slate-900 dark:text-white' : 'text-slate-600 dark:text-slate-300'}">
+                        ${isCliOrCode(cell) ? `<code class="font-mono text-xs px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-blue-600 dark:text-blue-400 border border-slate-200 dark:border-slate-700">${cell}</code>` : cell}
+                      </td>
+                    `).join('')}
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+
+      if (sec.bullets) {
+        html += `
+          <ul class="space-y-1.5 text-sm text-slate-700 dark:text-slate-300 list-disc list-inside pl-1">
+            ${sec.bullets.map(b => `<li>${b}</li>`).join('')}
+          </ul>
+        `;
+      }
+
+      if (sec.orderedList) {
+        html += `
+          <ol class="space-y-1.5 text-sm text-slate-700 dark:text-slate-300 list-decimal list-inside pl-1">
+            ${sec.orderedList.map(item => `<li>${item}</li>`).join('')}
+          </ol>
+        `;
+      }
+
+      if (sec.checklist) {
+        html += `
+          <div class="bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 rounded-xl p-3.5 space-y-2">
+            ${sec.checklistTitle ? `<p class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">${sec.checklistTitle}</p>` : `<p class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Verification and Troubleshooting Checklist</p>`}
+            <ul class="space-y-1.5 text-sm text-slate-700 dark:text-slate-200">
+              ${sec.checklist.map(item => `
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 w-4 h-4 rounded border border-blue-500/40 bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center text-[10px] font-mono shrink-0">+</span>
+                  <span>${item}</span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+        `;
+      }
+
+      if (sec.example) {
+        html += `
+          <div class="bg-blue-500/5 dark:bg-blue-500/10 border border-blue-500/20 rounded-xl p-4">
+            <p class="text-xs font-bold uppercase tracking-wider text-blue-700 dark:text-blue-300 mb-1.5">${sec.example.title}</p>
+            <p class="text-sm text-slate-700 dark:text-slate-200 whitespace-pre-line leading-relaxed">${sec.example.body}</p>
+          </div>
+        `;
+      }
+
+      html += `</div>`;
+      return html;
+    }
+
+    function isCliOrCode(text) {
+      return /^(gpupdate|gpresult|rsop\.msc|repadmin|dcdiag|nslookup|4624|4625|4720)/.test(text.trim());
+    }
+
+    document.getElementById('moduleSearchInput').addEventListener('input', (e) => {
+      state.moduleSearch = e.target.value;
+      renderModules();
+    });
+
+    document.getElementById('expandAllModulesBtn').addEventListener('click', () => {
+      STUDY_MODULES.forEach(m => state.expandedModules.add(m.id));
+      renderModules();
+    });
+
+    document.getElementById('collapseAllModulesBtn').addEventListener('click', () => {
+      state.expandedModules.clear();
+      renderModules();
+    });
+
+    // =========================================================================
+    // 8. RENDER QUICK EXAM CHEAT SHEET (VIEW 2)
+    // =========================================================================
+    function renderCheatSheet() {
+      const q = state.cheatSearch.trim().toLowerCase();
+
+      // Comparisons
+      const compBody = document.getElementById('comparisonsTableBody');
+      const filteredComps = KEY_COMPARISONS.filter(c => !q || c.concepts.toLowerCase().includes(q) || c.distinction.toLowerCase().includes(q));
+      compBody.innerHTML = filteredComps.length ? filteredComps.map(item => `
+        <tr class="hover:bg-slate-50 dark:hover:bg-slate-850/60 transition">
+          <td class="py-3 px-5 font-semibold text-slate-900 dark:text-white">${item.concepts}</td>
+          <td class="py-3 px-5 text-slate-600 dark:text-slate-300">${item.distinction}</td>
+        </tr>
+      `).join('') : `<tr><td colspan="2" class="py-4 px-5 text-center text-slate-500">No matching comparisons found.</td></tr>`;
+
+      // CLI Commands
+      const cmdGrid = document.getElementById('commandsGrid');
+      const filteredCmds = CLI_COMMANDS.filter(c => !q || c.cmd.toLowerCase().includes(q) || c.desc.toLowerCase().includes(q) || c.category.toLowerCase().includes(q));
+      cmdGrid.innerHTML = filteredCmds.length ? filteredCmds.map(item => `
+        <div class="flex flex-col justify-between p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-850 hover:border-blue-500/50 transition">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <span class="text-[11px] font-medium px-2 py-0.5 rounded bg-slate-200/70 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+                ${item.category}
+              </span>
+              <button
+                type="button"
+                onclick="copyToClipboard('${item.cmd}')"
+                class="text-xs font-medium px-2.5 py-1 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition"
+              >
+                Copy
+              </button>
+            </div>
+            <code class="block font-mono text-sm font-semibold text-blue-600 dark:text-blue-400 mb-1.5">
+              ${item.cmd}
+            </code>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+              ${item.desc}
+            </p>
+          </div>
+        </div>
+      `).join('') : `<p class="text-sm text-slate-500 col-span-full">No matching commands found.</p>`;
+
+      // Event IDs
+      const eventList = document.getElementById('eventIdsList');
+      const filteredEvents = EVENT_IDS.filter(e => !q || e.id.includes(q) || e.title.toLowerCase().includes(q) || e.detail.toLowerCase().includes(q));
+      eventList.innerHTML = filteredEvents.length ? filteredEvents.map(ev => `
+        <div class="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-850">
+          <div class="flex items-center gap-2.5 mb-1">
+            <span class="font-mono text-xs font-bold px-2.5 py-0.5 rounded bg-blue-600 text-white">ID ${ev.id}</span>
+            <span class="text-sm font-bold text-slate-900 dark:text-white">${ev.title}</span>
+          </div>
+          <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">${ev.detail}</p>
+        </div>
+      `).join('') : `<p class="text-sm text-slate-500">No matching Event IDs found.</p>`;
+
+      // Error & Recovery Concepts
+      const errGrid = document.getElementById('errorRecoveryGrid');
+      const filteredErrs = ERROR_RECOVERY_CONCEPTS.filter(er => !q || er.term.toLowerCase().includes(q) || er.meaning.toLowerCase().includes(q));
+      errGrid.innerHTML = filteredErrs.length ? filteredErrs.map(er => `
+        <div class="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-850">
+          <p class="font-mono text-xs font-bold text-blue-600 dark:text-blue-400 mb-1">${er.term}</p>
+          <p class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">${er.meaning}</p>
+        </div>
+      `).join('') : `<p class="text-sm text-slate-500 col-span-full">No matching error or recovery concepts found.</p>`;
+    }
+
+    document.getElementById('cheatSearchInput').addEventListener('input', (e) => {
+      state.cheatSearch = e.target.value;
+      renderCheatSheet();
+    });
+
+    // =========================================================================
+    // 9. RENDER & CONTROL FLASHCARDS (VIEW 3)
+    // =========================================================================
+    function getFilteredFlashcards() {
+      return state.fcOrder
+        .map(idx => FLASHCARDS_DATA[idx])
+        .filter(card => {
+          const catMatch = state.fcCategory === 'ALL' || card.category === state.fcCategory;
+          const status = state.fcProgress[card.id] || 'UNMARKED';
+          const statusMatch =
+            state.fcStatusFilter === 'ALL' ||
+            (state.fcStatusFilter === 'MASTERED' && status === 'MASTERED') ||
+            (state.fcStatusFilter === 'REVIEW' && status !== 'MASTERED');
+          return catMatch && statusMatch;
+        });
+    }
+
+    function renderFlashcards() {
+      const deck = getFilteredFlashcards();
+      const totalAll = FLASHCARDS_DATA.length;
+      const masteredCount = Object.values(state.fcProgress).filter(v => v === 'MASTERED').length;
+
+      document.getElementById('flashcardProgressLabel').textContent = `Mastered: ${masteredCount} of ${totalAll} cards`;
+      document.getElementById('flashcardProgressBar').style.width = `${Math.round((masteredCount / totalAll) * 100)}%`;
+
+      const inner = document.getElementById('flashcardInner');
+      if (state.fcFlipped) {
+        inner.classList.add('rotate-y-180');
+      } else {
+        inner.classList.remove('rotate-y-180');
+      }
+
+      if (deck.length === 0) {
+        document.getElementById('flashcardIndexLabel').textContent = 'Card 0 / 0';
+        document.getElementById('fcCategoryBadge').textContent = 'Empty Filter';
+        document.getElementById('fcStatusBadge').textContent = 'None';
+        document.getElementById('fcFrontText').textContent = 'No flashcards match the current category or status filter.';
+        document.getElementById('fcBackCategory').textContent = 'Empty';
+        document.getElementById('fcBackText').textContent = 'Switch your filter above to view flashcards.';
+        return;
+      }
+
+      if (state.fcCurrentPos >= deck.length) state.fcCurrentPos = 0;
+      if (state.fcCurrentPos < 0) state.fcCurrentPos = deck.length - 1;
+
+      const card = deck[state.fcCurrentPos];
+      const status = state.fcProgress[card.id] || 'UNMARKED';
+
+      document.getElementById('flashcardIndexLabel').textContent = `Card ${state.fcCurrentPos + 1} / ${deck.length}`;
+      document.getElementById('fcCategoryBadge').textContent = card.category;
+      document.getElementById('fcBackCategory').textContent = card.category;
+      document.getElementById('fcFrontText').textContent = card.front;
+      document.getElementById('fcBackText').textContent = card.back;
+
+      const statusBadge = document.getElementById('fcStatusBadge');
+      if (status === 'MASTERED') {
+        statusBadge.textContent = 'Mastered';
+        statusBadge.className = 'text-xs font-semibold px-2.5 py-1 rounded-md bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30';
+      } else if (status === 'REVIEW') {
+        statusBadge.textContent = 'Needs Review';
+        statusBadge.className = 'text-xs font-semibold px-2.5 py-1 rounded-md bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30';
+      } else {
+        statusBadge.textContent = 'Unmarked';
+        statusBadge.className = 'text-xs font-medium px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300';
+      }
+    }
+
+    function flipCard() {
+      state.fcFlipped = !state.fcFlipped;
+      renderFlashcards();
+    }
+
+    document.getElementById('flashcardStage').addEventListener('click', flipCard);
+    document.getElementById('flipFlashcardBtn').addEventListener('click', flipCard);
+
+    document.getElementById('prevFlashcardBtn').addEventListener('click', () => {
+      state.fcFlipped = false;
+      state.fcCurrentPos -= 1;
+      renderFlashcards();
+    });
+
+    document.getElementById('nextFlashcardBtn').addEventListener('click', () => {
+      state.fcFlipped = false;
+      state.fcCurrentPos += 1;
+      renderFlashcards();
+    });
+
+    document.getElementById('markMasteredBtn').addEventListener('click', () => {
+      const deck = getFilteredFlashcards();
+      if (!deck.length) return;
+      const card = deck[state.fcCurrentPos];
+      state.fcProgress[card.id] = 'MASTERED';
+      saveProgress();
+      state.fcFlipped = false;
+      if (state.fcStatusFilter === 'ALL') {
+        state.fcCurrentPos += 1;
+      }
+      renderFlashcards();
+    });
+
+    document.getElementById('markNeedsReviewBtn').addEventListener('click', () => {
+      const deck = getFilteredFlashcards();
+      if (!deck.length) return;
+      const card = deck[state.fcCurrentPos];
+      state.fcProgress[card.id] = 'REVIEW';
+      saveProgress();
+      state.fcFlipped = false;
+      state.fcCurrentPos += 1;
+      renderFlashcards();
+    });
+
+    document.getElementById('flashcardCategoryFilter').addEventListener('change', (e) => {
+      state.fcCategory = e.target.value;
+      state.fcCurrentPos = 0;
+      state.fcFlipped = false;
+      renderFlashcards();
+    });
+
+    document.getElementById('flashcardStatusFilter').addEventListener('change', (e) => {
+      state.fcStatusFilter = e.target.value;
+      state.fcCurrentPos = 0;
+      state.fcFlipped = false;
+      renderFlashcards();
+    });
+
+    document.getElementById('shuffleFlashcardsBtn').addEventListener('click', () => {
+      for (let i = state.fcOrder.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [state.fcOrder[i], state.fcOrder[j]] = [state.fcOrder[j], state.fcOrder[i]];
+      }
+      state.fcCurrentPos = 0;
+      state.fcFlipped = false;
+      renderFlashcards();
+      showToast('Flashcard deck shuffled');
+    });
+
+    document.getElementById('resetFlashcardProgressBtn').addEventListener('click', () => {
+      state.fcProgress = {};
+      saveProgress();
+      state.fcCurrentPos = 0;
+      state.fcFlipped = false;
+      renderFlashcards();
+      showToast('Flashcard progress reset');
+    });
+
+    // =========================================================================
+    // 10. RENDER & CONTROL 50-ITEM PRACTICE EXAM (VIEW 4)
+    // =========================================================================
+    function updateExamStats() {
+      const total = EXAM_QUESTIONS.length;
+      const answeredIds = Object.keys(state.userAnswers).map(Number);
+      const answeredCount = answeredIds.length;
+
+      let correctCount = 0;
+      let incorrectCount = 0;
+
+      answeredIds.forEach(id => {
+        const q = EXAM_QUESTIONS.find(item => item.id === id);
+        if (q) {
+          if (state.userAnswers[id] === q.answer) {
+            correctCount++;
+          } else {
+            incorrectCount++;
+          }
+        }
+      });
+
+      const showResults = state.examMode === 'IMMEDIATE' || state.simulationSubmitted;
+      document.getElementById('statAnswered').textContent = `${answeredCount} / ${total}`;
+      document.getElementById('statCorrect').textContent = showResults ? `${correctCount}` : '--';
+      document.getElementById('statIncorrect').textContent = showResults ? `${incorrectCount}` : '--';
+      const pct = answeredCount > 0 ? Math.round((correctCount / total) * 100) : 0;
+      document.getElementById('statScore').textContent = showResults ? `${pct}%` : 'Pending';
+    }
+
+    window.selectExamAnswer = function(qId, boolVal) {
+      // One-time answer locking in Immediate Feedback Mode
+      if (state.examMode === 'IMMEDIATE' && Object.prototype.hasOwnProperty.call(state.userAnswers, qId)) {
+        return;
+      }
+      // Lock after grading in Exam Simulation Mode
+      if (state.examMode === 'SIMULATION' && state.simulationSubmitted) {
+        return;
+      }
+      state.userAnswers[qId] = boolVal;
+      saveProgress();
+      renderExam();
+    };
+
+    function renderExam() {
+      updateExamStats();
+      const container = document.getElementById('examQuestionsContainer');
+      const showFeedback = state.examMode === 'IMMEDIATE' || state.simulationSubmitted;
+
+      const filtered = EXAM_QUESTIONS.filter(q => {
+        const hasAnswered = Object.prototype.hasOwnProperty.call(state.userAnswers, q.id);
+        const isCorrect = hasAnswered && state.userAnswers[q.id] === q.answer;
+        if (state.examFilter === 'UNANSWERED') return !hasAnswered;
+        if (state.examFilter === 'MISSED') return hasAnswered && !isCorrect;
+        if (state.examFilter === 'CORRECT') return hasAnswered && isCorrect;
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 sm:p-8 text-center">
+            <p class="text-sm text-slate-500 dark:text-slate-400">No exam items match the current filter.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(q => {
+        const hasAnswered = Object.prototype.hasOwnProperty.call(state.userAnswers, q.id);
+        const userChoice = state.userAnswers[q.id];
+        const isCorrect = hasAnswered && userChoice === q.answer;
+        const isLocked = (state.examMode === 'IMMEDIATE' && hasAnswered) || (state.examMode === 'SIMULATION' && state.simulationSubmitted);
+
+        let cardBorder = 'border-slate-200 dark:border-slate-800';
+        if (hasAnswered && showFeedback) {
+          cardBorder = isCorrect
+            ? 'border-emerald-500/50 dark:border-emerald-500/40'
+            : 'border-rose-500/50 dark:border-rose-500/40';
+        }
+
+        const trueBtnClass = getOptionBtnClass(hasAnswered, userChoice, true, q.answer, showFeedback, isLocked);
+        const falseBtnClass = getOptionBtnClass(hasAnswered, userChoice, false, q.answer, showFeedback, isLocked);
+
+        const trueLabel = getOptionBtnLabel(hasAnswered, userChoice, true, q.answer, showFeedback);
+        const falseLabel = getOptionBtnLabel(hasAnswered, userChoice, false, q.answer, showFeedback);
+
+        const userChoiceText = userChoice ? 'True' : 'False';
+        const correctAnswerText = q.answer ? 'True' : 'False';
+
+        return `
+          <div class="bg-white dark:bg-slate-900 border ${cardBorder} rounded-2xl p-4 sm:p-5 shadow-sm transition">
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3.5 sm:gap-4">
+              <div class="flex items-start gap-2.5 sm:gap-3">
+                <span class="shrink-0 font-mono text-xs font-bold px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-850 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+                  #${String(q.id).padStart(2, '0')}
+                </span>
+                <p class="text-sm sm:text-base font-medium text-slate-900 dark:text-white leading-relaxed">
+                  ${q.statement}
+                </p>
+              </div>
+
+              <!-- True / False Buttons (Full-width 2-col grid on mobile, compact inline on desktop) -->
+              <div class="grid grid-cols-2 sm:flex items-center gap-2 w-full sm:w-auto shrink-0">
+                <button
+                  type="button"
+                  ${isLocked ? 'disabled aria-disabled="true"' : ''}
+                  onclick="selectExamAnswer(${q.id}, true)"
+                  class="${trueBtnClass}"
+                >
+                  ${trueLabel}
+                </button>
+                <button
+                  type="button"
+                  ${isLocked ? 'disabled aria-disabled="true"' : ''}
+                  onclick="selectExamAnswer(${q.id}, false)"
+                  class="${falseBtnClass}"
+                >
+                  ${falseLabel}
+                </button>
+              </div>
+            </div>
+
+            <!-- Explanation Box -->
+            ${hasAnswered && showFeedback ? `
+              <div class="mt-3.5 sm:mt-4 pt-3.5 border-t border-slate-200 dark:border-slate-800 space-y-2">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="shrink-0 text-xs font-mono font-bold px-2.5 py-0.5 rounded ${isCorrect ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30' : 'bg-rose-500/15 text-rose-700 dark:text-rose-300 border border-rose-500/30'}">
+                    ${isCorrect ? 'CORRECT' : 'WRONG ANSWER'}
+                  </span>
+                  <span class="text-xs font-medium text-slate-600 dark:text-slate-300">
+                    ${isCorrect
+                      ? `You selected <strong class="text-emerald-600 dark:text-emerald-400">${userChoiceText}</strong>.`
+                      : `You selected <strong class="text-rose-600 dark:text-rose-400">${userChoiceText}</strong>, but the correct answer is <strong class="text-emerald-600 dark:text-emerald-400">${correctAnswerText}</strong>.`
+                    }
+                  </span>
+                </div>
+                <div class="rounded-xl p-3 text-xs sm:text-sm leading-relaxed ${isCorrect ? 'bg-emerald-500/5 dark:bg-emerald-500/10 text-slate-700 dark:text-slate-200 border border-emerald-500/20' : 'bg-rose-500/5 dark:bg-rose-500/10 text-slate-700 dark:text-slate-200 border border-rose-500/20'}">
+                  ${!isCorrect ? `<p class="font-semibold text-rose-700 dark:text-rose-300 mb-1">Why your answer is wrong:</p>` : ''}
+                  <p>${q.explanation}</p>
+                </div>
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function getOptionBtnLabel(hasAnswered, userChoice, optionVal, correctAnswer, showFeedback) {
+      const baseText = optionVal ? 'True' : 'False';
+      if (!hasAnswered || !showFeedback) return baseText;
+
+      const isSelected = userChoice === optionVal;
+      const isCorrectOpt = optionVal === correctAnswer;
+
+      if (isSelected && isCorrectOpt) {
+        return `${baseText} (Your Choice)`;
+      }
+      if (isSelected && !isCorrectOpt) {
+        return `${baseText} (Your Choice)`;
+      }
+      if (!isSelected && isCorrectOpt) {
+        return `${baseText} (Correct)`;
+      }
+      return baseText;
+    }
+
+    function getOptionBtnClass(hasAnswered, userChoice, optionVal, correctAnswer, showFeedback, isLocked) {
+      const lockClasses = isLocked ? ' cursor-not-allowed pointer-events-none' : ' cursor-pointer';
+      const base = 'min-h-[48px] sm:min-h-[40px] px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold border transition text-center flex items-center justify-center' + lockClasses + ' ';
+      const isSelected = hasAnswered && userChoice === optionVal;
+
+      if (!showFeedback) {
+        if (isSelected) {
+          return base + 'bg-blue-600 text-white border-blue-600 ring-2 ring-blue-400/50 shadow-sm';
+        }
+        return base + 'bg-slate-50 dark:bg-slate-850 text-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-700 hover:border-blue-500';
+      }
+
+      // Immediate feedback or submitted simulation
+      if (hasAnswered) {
+        if (isSelected && optionVal === correctAnswer) {
+          return base + 'bg-emerald-600 text-white border-emerald-600 ring-2 ring-emerald-400/60 shadow-sm';
+        }
+        if (isSelected && optionVal !== correctAnswer) {
+          return base + 'bg-rose-600 text-white border-rose-600 ring-2 ring-rose-400/60 shadow-sm';
+        }
+        if (!isSelected && optionVal === correctAnswer) {
+          return base + 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/60';
+        }
+      }
+      return base + 'bg-slate-100/70 dark:bg-slate-850/60 text-slate-400 dark:text-slate-500 border-slate-200 dark:border-slate-800 opacity-70';
+    }
+
+    document.getElementById('modeImmediateBtn').addEventListener('click', () => {
+      state.examMode = 'IMMEDIATE';
+      state.simulationSubmitted = false;
+      document.getElementById('modeImmediateBtn').className = 'px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium bg-blue-600 text-white transition text-center';
+      document.getElementById('modeSimulationBtn').className = 'px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition text-center';
+      document.getElementById('submitSimulationBtn').classList.add('hidden');
+      renderExam();
+    });
+
+    document.getElementById('modeSimulationBtn').addEventListener('click', () => {
+      state.examMode = 'SIMULATION';
+      state.simulationSubmitted = false;
+      document.getElementById('modeSimulationBtn').className = 'px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium bg-blue-600 text-white transition text-center';
+      document.getElementById('modeImmediateBtn').className = 'px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition text-center';
+      document.getElementById('submitSimulationBtn').classList.remove('hidden');
+      renderExam();
+    });
+
+    document.getElementById('submitSimulationBtn').addEventListener('click', () => {
+      state.simulationSubmitted = true;
+      renderExam();
+      showToast('Exam graded. Review your score and explanations below.');
+    });
+
+    document.getElementById('examFilterSelect').addEventListener('change', (e) => {
+      state.examFilter = e.target.value;
+      renderExam();
+    });
+
+    document.getElementById('resetExamBtn').addEventListener('click', () => {
+      state.userAnswers = {};
+      state.simulationSubmitted = false;
+      saveProgress();
+      renderExam();
+      showToast('Practice exam answers cleared');
+    });
+
+    // Utility HTML escape
+    function escapeHtml(str) {
+      return str.replace(/[&<>"']/g, function(m) {
+        return ({
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;'
+        })[m];
+      });
+    }
+
+    // Keyboard shortcut for flashcard flipping (Spacebar when in Flashcards tab)
+    document.addEventListener('keydown', (e) => {
+      if (state.activeTab === 'flashcards' && e.code === 'Space' && document.activeElement.tagName !== 'SELECT' && document.activeElement.tagName !== 'INPUT') {
+        e.preventDefault();
+        flipCard();
+      }
+    });
+
+    // Initial Render
+    renderModulePills();
+    renderModules();
+    renderCheatSheet();
+    renderFlashcards();
+    renderExam();
+  </script>
+</body>
+</html>
