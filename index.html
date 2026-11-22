@@ -1577,11 +1577,24 @@
     }
 
     // =========================================================================
-    // 6. THEME & TAB NAVIGATION
+    // 6. THEME & TAB NAVIGATION (DEFAULT LIGHT MODE)
     // =========================================================================
     function toggleTheme() {
-      document.documentElement.classList.toggle('dark');
+      const isDark = document.documentElement.classList.toggle('dark');
+      try {
+        localStorage.setItem('ws_reviewer_theme', isDark ? 'dark' : 'light');
+      } catch (e) {}
     }
+
+    // Default is Light. Only activate dark if user explicitly chose it previously
+    try {
+      const savedTheme = localStorage.getItem('ws_reviewer_theme');
+      if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    } catch (e) {}
 
     const themeBtn = document.getElementById('themeToggleBtn');
     if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
