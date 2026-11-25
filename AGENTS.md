@@ -27,3 +27,14 @@ Enforce the following system directives across this codebase and all future task
 - **GitHub Standards**: Maintain clean version control practices with descriptive commit messages and modular edits.
 - **MCP (Model Context Protocol)**: Leverage connected tools, databases, and APIs (GitHub, Figma, Supabase) for live context and secure workflow execution.
 
+## [Skill Routing Rules]
+Apply the right skill at the right phase across all sessions without token bloat:
+- `understand-anything`: Use only when mapping unfamiliar modules or analyzing diff impact on shared core files.
+- `superpowers`: Use for multi-file features, complex logic, or architecture to lock down a plan and verification criteria before coding.
+- `frontend-design`: Use only when designing new pages, views, or visual layouts from scratch.
+- `ponytail`: Apply to all coding tasks (full mode) to enforce minimal diffs, native APIs, and reuse of existing helpers without adding bloat.
+- `emil-design-eng`: Apply whenever adding or modifying transitions, modals, drawers, tooltips, or interactive feedback.
+- `make-interfaces-feel-better`: Apply during CSS/styling passes for concentric radii, optical alignment, hit-target sizing, and typography rules.
+- `web-design-guidelines`: Run on modified frontend files before finishing any UI task to audit accessibility, focus states, and semantic HTML.
+
+

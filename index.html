@@ -87,10 +87,29 @@
       -webkit-overflow-scrolling: touch;
     }
     .press-effect {
-      transition: transform 0.15s ease, background-color 0.15s ease;
+      transition: transform 0.15s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.15s ease-out;
     }
     .press-effect:active {
       transform: scale(0.96);
+    }
+    h1, h2, h3, h4 {
+      text-wrap: balance;
+    }
+    button:focus-visible,
+    select:focus-visible,
+    input:focus-visible,
+    [tabindex]:focus-visible {
+      outline: 2px solid #2563eb;
+      outline-offset: 2px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
     }
   </style>
 </head>
@@ -122,16 +141,16 @@
 
         <!-- Desktop Navigation Tabs -->
         <nav aria-label="Study Modes" class="hidden md:flex items-center gap-1 bg-slate-100 dark:bg-slate-850 p-1 rounded-xl border border-slate-200 dark:border-slate-800">
-          <button data-tab="modules" class="nav-tab px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition text-center bg-blue-600 text-white shadow-sm whitespace-nowrap press-effect">
+          <button data-tab="modules" aria-current="page" class="nav-tab min-h-[40px] px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-colors duration-150 text-center bg-blue-600 text-white shadow-sm whitespace-nowrap press-effect">
             📚 Study Modules
           </button>
-          <button data-tab="cheatsheet" class="nav-tab px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition text-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white whitespace-nowrap press-effect">
+          <button data-tab="cheatsheet" class="nav-tab min-h-[40px] px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-colors duration-150 text-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white whitespace-nowrap press-effect">
             ⚡ Cheat Sheet
           </button>
-          <button data-tab="flashcards" class="nav-tab px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition text-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white whitespace-nowrap press-effect">
+          <button data-tab="flashcards" class="nav-tab min-h-[40px] px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-colors duration-150 text-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white whitespace-nowrap press-effect">
             🗂️ Flashcards
           </button>
-          <button data-tab="exam" class="nav-tab px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition text-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white whitespace-nowrap press-effect">
+          <button data-tab="exam" class="nav-tab min-h-[40px] px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-colors duration-150 text-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white whitespace-nowrap press-effect">
             📝 50-Item Exam
           </button>
         </nav>
@@ -141,7 +160,7 @@
           <!-- Offline / Online Status Indicator -->
           <div
             id="networkStatusPill"
-            class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-mono font-medium border border-slate-200 dark:border-slate-800 bg-slate-100/90 dark:bg-slate-800/90 text-slate-700 dark:text-slate-300 transition select-none cursor-default"
+            class="min-h-[40px] flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-mono font-medium border border-slate-200 dark:border-slate-800 bg-slate-100/90 dark:bg-slate-800/90 text-slate-700 dark:text-slate-300 transition-colors duration-150 select-none cursor-default"
             title="Service Worker offline ready"
           >
             <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -153,10 +172,10 @@
             id="themeToggleBtn"
             type="button"
             aria-label="Toggle color theme"
-            class="shrink-0 p-2 sm:px-3 sm:py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition flex items-center gap-1.5 text-xs font-medium press-effect"
+            class="min-h-[40px] min-w-[40px] shrink-0 p-2 sm:px-3 sm:py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors duration-150 flex items-center justify-center gap-1.5 text-xs font-medium press-effect"
           >
-            <svg class="w-4 h-4 hidden dark:block text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-            <svg class="w-4 h-4 block dark:hidden text-slate-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+            <svg aria-hidden="true" class="w-4 h-4 hidden dark:block text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+            <svg aria-hidden="true" class="w-4 h-4 block dark:hidden text-slate-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
             <span class="hidden sm:inline dark:hidden">Dark</span>
             <span class="hidden sm:hidden dark:sm:inline">Light</span>
           </button>
@@ -166,7 +185,7 @@
   </header>
 
   <!-- Toast / Message Box -->
-  <div id="toastNotification" class="fixed bottom-20 left-3 right-3 sm:left-auto sm:right-5 sm:bottom-5 z-50 hidden transform transition-all duration-200">
+  <div id="toastNotification" role="status" aria-live="polite" class="fixed bottom-20 left-3 right-3 sm:left-auto sm:right-5 sm:bottom-5 z-50 hidden transform transition-[opacity,transform] duration-200 ease-out">
     <div class="bg-slate-900/95 dark:bg-slate-800/95 backdrop-blur text-white border border-slate-700/80 px-4 py-2.5 rounded-2xl shadow-xl flex items-center gap-2.5 text-xs sm:text-sm">
       <span class="w-2 h-2 shrink-0 rounded-full bg-blue-400 animate-pulse"></span>
       <span id="toastText">Copied to clipboard</span>
@@ -193,16 +212,17 @@
               <input
                 type="text"
                 id="moduleSearchInput"
+                aria-label="Filter study modules or keywords"
                 placeholder="Filter modules or keywords..."
-                class="w-full pl-9 pr-3 py-2 text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-850 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                class="w-full min-h-[40px] pl-9 pr-3 py-2 text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-850 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <svg class="w-4 h-4 text-slate-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              <svg aria-hidden="true" class="w-4 h-4 text-slate-400 absolute left-3 top-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             </div>
             <div class="grid grid-cols-2 sm:flex gap-2">
-              <button id="expandAllModulesBtn" type="button" class="px-3 py-2 text-xs font-medium rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+              <button id="expandAllModulesBtn" type="button" class="min-h-[40px] px-3 py-2 text-xs font-medium rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors duration-150 press-effect">
                 Expand All
               </button>
-              <button id="collapseAllModulesBtn" type="button" class="px-3 py-2 text-xs font-medium rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+              <button id="collapseAllModulesBtn" type="button" class="min-h-[40px] px-3 py-2 text-xs font-medium rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors duration-150 press-effect">
                 Collapse All
               </button>
             </div>
@@ -233,10 +253,11 @@
             <input
               type="text"
               id="cheatSearchInput"
+              aria-label="Search comparisons, commands, and Event IDs"
               placeholder="Search comparisons, commands, IDs..."
-              class="w-full pl-9 pr-3 py-2 text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-850 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              class="w-full min-h-[40px] pl-9 pr-3 py-2 text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-850 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            <svg class="w-4 h-4 text-slate-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <svg aria-hidden="true" class="w-4 h-4 text-slate-400 absolute left-3 top-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
           </div>
         </div>
       </div>
@@ -248,12 +269,12 @@
             <h3 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white">Important Comparisons (10 Distinctions)</h3>
             <span class="shrink-0 text-[11px] font-mono px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">EXAM FOCUS</span>
           </div>
-          <!-- View Mode Switcher -->
-          <div class="inline-flex rounded-xl border border-slate-300 dark:border-slate-700 p-0.5 bg-slate-100 dark:bg-slate-850">
-            <button id="compViewTableBtn" type="button" class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-blue-600 text-white transition press-effect">
+          <!-- View Mode Switcher (Concentric radii: outer rounded-xl + p-1 = inner rounded-lg) -->
+          <div class="inline-flex rounded-xl border border-slate-300 dark:border-slate-700 p-1 bg-slate-100 dark:bg-slate-850">
+            <button id="compViewTableBtn" type="button" aria-pressed="true" class="min-h-[40px] px-3 py-1.5 text-xs font-semibold rounded-lg bg-blue-600 text-white transition-colors duration-150 press-effect">
               📊 Table
             </button>
-            <button id="compViewCardsBtn" type="button" class="px-2.5 py-1 text-xs font-medium rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition press-effect">
+            <button id="compViewCardsBtn" type="button" aria-pressed="false" class="min-h-[40px] px-3 py-1.5 text-xs font-medium rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors duration-150 press-effect">
               🗂️ Cards
             </button>
           </div>
@@ -318,7 +339,7 @@
             </p>
           </div>
           <div class="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2">
-            <select id="flashcardCategoryFilter" class="col-span-2 sm:col-span-1 px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-850 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <select id="flashcardCategoryFilter" aria-label="Filter flashcards by category" class="col-span-2 sm:col-span-1 min-h-[40px] px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-850 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
               <option value="ALL">All Categories</option>
               <option value="AD & OUs">AD DS & OUs</option>
               <option value="WSUS & FSRM">WSUS & FSRM</option>
@@ -328,15 +349,15 @@
               <option value="FSMO & DSRM">FSMO Roles & DSRM</option>
               <option value="CLI Commands">CLI Commands</option>
             </select>
-            <select id="flashcardStatusFilter" class="col-span-2 sm:col-span-1 px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-850 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <select id="flashcardStatusFilter" aria-label="Filter flashcards by study status" class="col-span-2 sm:col-span-1 min-h-[40px] px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-850 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
               <option value="ALL">All Cards</option>
               <option value="REVIEW">Needs Review</option>
               <option value="MASTERED">Mastered</option>
             </select>
-            <button id="shuffleFlashcardsBtn" type="button" class="px-3 py-2 text-xs sm:text-sm font-medium rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+            <button id="shuffleFlashcardsBtn" type="button" class="min-h-[40px] px-3 py-2 text-xs sm:text-sm font-medium rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors duration-150 press-effect">
               Shuffle Deck
             </button>
-            <button id="resetFlashcardProgressBtn" type="button" class="px-3 py-2 text-xs sm:text-sm font-medium rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-rose-600 dark:text-rose-400 transition">
+            <button id="resetFlashcardProgressBtn" type="button" class="min-h-[40px] px-3 py-2 text-xs sm:text-sm font-medium rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-rose-600 dark:text-rose-400 transition-colors duration-150 press-effect">
               Reset Progress
             </button>
           </div>
@@ -344,18 +365,18 @@
 
         <div class="mt-4 pt-3.5 border-t border-slate-200 dark:border-slate-800">
           <div class="flex items-center justify-between text-xs font-medium mb-1.5">
-            <span id="flashcardProgressLabel" class="text-slate-600 dark:text-slate-300">Mastered: 0 of 0 cards</span>
-            <span id="flashcardIndexLabel" class="font-mono text-slate-500 dark:text-slate-400">Card 1 / 0</span>
+            <span id="flashcardProgressLabel" class="text-slate-600 dark:text-slate-300 tabular-nums">Mastered: 0 of 0 cards</span>
+            <span id="flashcardIndexLabel" aria-live="polite" class="font-mono text-slate-500 dark:text-slate-400 tabular-nums">Card 1 / 0</span>
           </div>
           <div class="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
-            <div id="flashcardProgressBar" class="h-full bg-blue-600 transition-all duration-300" style="width: 0%"></div>
+            <div id="flashcardProgressBar" class="h-full bg-blue-600 transition-[width] duration-300 ease-out" style="width: 0%"></div>
           </div>
         </div>
       </div>
 
       <div class="max-w-3xl mx-auto">
         <div id="flashcardStage" class="perspective-1000 cursor-pointer select-none touch-pan-y" tabindex="0" role="button" aria-label="Flip flashcard">
-          <div id="flashcardInner" class="relative w-full min-h-[270px] sm:min-h-[320px] transition-transform duration-500 transform-style-3d">
+          <div id="flashcardInner" class="relative w-full min-h-[270px] sm:min-h-[320px] transition-transform duration-300 ease-out transform-style-3d">
             <div class="absolute inset-0 backface-hidden bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-8 shadow-md flex flex-col justify-between">
               <div class="flex items-center justify-between gap-2">
                 <span id="fcCategoryBadge" class="text-[11px] sm:text-xs font-mono font-semibold px-2.5 py-1 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
@@ -439,31 +460,31 @@
 
           <div class="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-2">
             <div class="grid grid-cols-2 sm:inline-flex rounded-xl border border-slate-300 dark:border-slate-700 p-1 bg-slate-100 dark:bg-slate-850">
-              <button id="modeImmediateBtn" type="button" class="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium bg-blue-600 text-white transition text-center">
+              <button id="modeImmediateBtn" type="button" aria-pressed="true" class="min-h-[40px] px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium bg-blue-600 text-white transition-colors duration-150 text-center press-effect">
                 Immediate Feedback
               </button>
-              <button id="modeSimulationBtn" type="button" class="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition text-center">
+              <button id="modeSimulationBtn" type="button" aria-pressed="false" class="min-h-[40px] px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors duration-150 text-center press-effect">
                 Exam Simulation
               </button>
             </div>
 
             <div class="flex flex-wrap items-center gap-2">
-              <select id="examFilterSelect" class="flex-1 sm:flex-initial px-3 py-2 text-xs font-medium rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <select id="examFilterSelect" aria-label="Filter exam questions by status" class="flex-1 sm:flex-initial min-h-[40px] px-3 py-2 text-xs font-medium rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <option value="ALL">Show All (50 Items)</option>
                 <option value="UNANSWERED">Unanswered Only</option>
                 <option value="MISSED">Missed Items Only</option>
                 <option value="CORRECT">Correct Items Only</option>
               </select>
 
-              <button id="shuffleExamBtn" type="button" class="shrink-0 px-3.5 py-2 text-xs font-medium rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-blue-600 dark:text-blue-400 transition">
+              <button id="shuffleExamBtn" type="button" class="shrink-0 min-h-[40px] px-3.5 py-2 text-xs font-medium rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-blue-600 dark:text-blue-400 transition-colors duration-150 press-effect">
                 Shuffle
               </button>
 
-              <button id="submitSimulationBtn" type="button" class="hidden shrink-0 px-3.5 py-2 text-xs font-semibold rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white transition shadow-sm">
+              <button id="submitSimulationBtn" type="button" class="hidden shrink-0 min-h-[40px] px-3.5 py-2 text-xs font-semibold rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white transition-colors duration-150 shadow-sm press-effect">
                 Grade Exam
               </button>
 
-              <button id="resetExamBtn" type="button" class="shrink-0 px-3.5 py-2 text-xs font-medium rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-rose-600 dark:text-rose-400 transition">
+              <button id="resetExamBtn" type="button" class="shrink-0 min-h-[40px] px-3.5 py-2 text-xs font-medium rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-rose-600 dark:text-rose-400 transition-colors duration-150 press-effect">
                 Reset Exam
               </button>
             </div>
@@ -473,19 +494,19 @@
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 mt-4 pt-4 border-t border-slate-200 dark:border-slate-800">
           <div class="bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 rounded-xl p-2.5 sm:p-3">
             <p class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400">Answered</p>
-            <p id="statAnswered" class="text-base sm:text-lg font-bold font-mono text-slate-900 dark:text-white mt-0.5">0 / 50</p>
+            <p id="statAnswered" class="text-base sm:text-lg font-bold font-mono tabular-nums text-slate-900 dark:text-white mt-0.5">0 / 50</p>
           </div>
           <div class="bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 rounded-xl p-2.5 sm:p-3">
             <p class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400">Correct</p>
-            <p id="statCorrect" class="text-base sm:text-lg font-bold font-mono text-emerald-600 dark:text-emerald-400 mt-0.5">0</p>
+            <p id="statCorrect" class="text-base sm:text-lg font-bold font-mono tabular-nums text-emerald-600 dark:text-emerald-400 mt-0.5">0</p>
           </div>
           <div class="bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 rounded-xl p-2.5 sm:p-3">
             <p class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400">Incorrect</p>
-            <p id="statIncorrect" class="text-base sm:text-lg font-bold font-mono text-rose-600 dark:text-rose-400 mt-0.5">0</p>
+            <p id="statIncorrect" class="text-base sm:text-lg font-bold font-mono tabular-nums text-rose-600 dark:text-rose-400 mt-0.5">0</p>
           </div>
           <div class="bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 rounded-xl p-2.5 sm:p-3">
             <p class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400">Accuracy Score</p>
-            <p id="statScore" class="text-base sm:text-lg font-bold font-mono text-blue-600 dark:text-blue-400 mt-0.5">0%</p>
+            <p id="statScore" aria-live="polite" class="text-base sm:text-lg font-bold font-mono tabular-nums text-blue-600 dark:text-blue-400 mt-0.5">0%</p>
           </div>
         </div>
       </div>
@@ -493,11 +514,11 @@
       <div id="mobileExamStickyBar" class="sticky top-14 z-20 md:hidden bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-xl p-2.5 px-3.5 flex items-center justify-between shadow-sm">
         <div class="flex items-center gap-1.5 text-xs">
           <span class="text-slate-500 dark:text-slate-400">Answered:</span>
-          <span id="mobileStatAnswered" class="font-mono font-bold text-slate-900 dark:text-white">0 / 50</span>
+          <span id="mobileStatAnswered" class="font-mono font-bold tabular-nums text-slate-900 dark:text-white">0 / 50</span>
         </div>
         <div class="flex items-center gap-1.5 text-xs">
           <span class="text-slate-500 dark:text-slate-400">Score:</span>
-          <span id="mobileStatScore" class="font-mono font-bold text-blue-600 dark:text-blue-400">0%</span>
+          <span id="mobileStatScore" class="font-mono font-bold tabular-nums text-blue-600 dark:text-blue-400">0%</span>
         </div>
       </div>
 
@@ -538,28 +559,28 @@
     id="backToTopBtn"
     type="button"
     aria-label="Back to top"
-    class="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-30 p-2.5 sm:p-3 rounded-2xl bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-slate-200 dark:border-slate-700 shadow-xl text-slate-700 dark:text-slate-200 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 hover:border-blue-600 transition-all duration-200 opacity-0 pointer-events-none press-effect flex items-center justify-center"
+    class="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-30 min-w-[44px] min-h-[44px] p-2.5 sm:p-3 rounded-2xl bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-slate-200 dark:border-slate-700 shadow-xl text-slate-700 dark:text-slate-200 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 hover:border-blue-600 transition-[opacity,transform,background-color,color,border-color] duration-200 ease-out opacity-0 pointer-events-none press-effect flex items-center justify-center"
   >
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
+    <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
   </button>
 
   <!-- Mobile Bottom Navigation Dock -->
   <nav aria-label="Mobile Navigation" class="fixed bottom-0 inset-x-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg border-t border-slate-200 dark:border-slate-800 pb-[env(safe-area-inset-bottom,0px)] md:hidden shadow-xl">
     <div class="grid grid-cols-4 max-w-md mx-auto px-1.5 py-1.5">
-      <button data-tab="modules" class="mobile-nav-btn flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition text-blue-600 dark:text-blue-400 font-bold bg-blue-50/70 dark:bg-blue-950/40 press-effect">
-        <span class="text-lg leading-none mb-0.5">📚</span>
+      <button data-tab="modules" aria-current="page" class="mobile-nav-btn min-h-[48px] flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition-colors duration-150 text-blue-600 dark:text-blue-400 font-bold bg-blue-50/70 dark:bg-blue-950/40 press-effect">
+        <span class="text-lg leading-none mb-0.5" aria-hidden="true">📚</span>
         <span class="text-[11px] font-semibold leading-tight tracking-tight">Modules</span>
       </button>
-      <button data-tab="cheatsheet" class="mobile-nav-btn flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition text-slate-500 dark:text-slate-400 font-medium press-effect">
-        <span class="text-lg leading-none mb-0.5">⚡</span>
+      <button data-tab="cheatsheet" class="mobile-nav-btn min-h-[48px] flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition-colors duration-150 text-slate-500 dark:text-slate-400 font-medium press-effect">
+        <span class="text-lg leading-none mb-0.5" aria-hidden="true">⚡</span>
         <span class="text-[11px] font-medium leading-tight tracking-tight">Cheats</span>
       </button>
-      <button data-tab="flashcards" class="mobile-nav-btn flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition text-slate-500 dark:text-slate-400 font-medium press-effect">
-        <span class="text-lg leading-none mb-0.5">🗂️</span>
+      <button data-tab="flashcards" class="mobile-nav-btn min-h-[48px] flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition-colors duration-150 text-slate-500 dark:text-slate-400 font-medium press-effect">
+        <span class="text-lg leading-none mb-0.5" aria-hidden="true">🗂️</span>
         <span class="text-[11px] font-medium leading-tight tracking-tight">Cards</span>
       </button>
-      <button data-tab="exam" class="mobile-nav-btn flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition text-slate-500 dark:text-slate-400 font-medium press-effect">
-        <span class="text-lg leading-none mb-0.5">📝</span>
+      <button data-tab="exam" class="mobile-nav-btn min-h-[48px] flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition-colors duration-150 text-slate-500 dark:text-slate-400 font-medium press-effect">
+        <span class="text-lg leading-none mb-0.5" aria-hidden="true">📝</span>
         <span class="text-[11px] font-medium leading-tight tracking-tight">50 Exam</span>
       </button>
     </div>
@@ -1603,16 +1624,18 @@
       state.activeTab = tabName;
       document.querySelectorAll('.nav-tab').forEach(btn => {
         const isTarget = btn.getAttribute('data-tab') === tabName;
+        btn.setAttribute('aria-current', isTarget ? 'page' : 'false');
         btn.className = isTarget
-          ? 'nav-tab px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition text-center bg-blue-600 text-white shadow-sm whitespace-nowrap press-effect'
-          : 'nav-tab px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition text-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white whitespace-nowrap press-effect';
+          ? 'nav-tab min-h-[40px] px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-colors duration-150 text-center bg-blue-600 text-white shadow-sm whitespace-nowrap press-effect'
+          : 'nav-tab min-h-[40px] px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-colors duration-150 text-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white whitespace-nowrap press-effect';
       });
 
       document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
         const isTarget = btn.getAttribute('data-tab') === tabName;
+        btn.setAttribute('aria-current', isTarget ? 'page' : 'false');
         btn.className = isTarget
-          ? 'mobile-nav-btn flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition text-blue-600 dark:text-blue-400 font-bold bg-blue-50/70 dark:bg-blue-950/40 press-effect'
-          : 'mobile-nav-btn flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition text-slate-500 dark:text-slate-400 font-medium hover:text-slate-900 dark:hover:text-white press-effect';
+          ? 'mobile-nav-btn min-h-[48px] flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition-colors duration-150 text-blue-600 dark:text-blue-400 font-bold bg-blue-50/70 dark:bg-blue-950/40 press-effect'
+          : 'mobile-nav-btn min-h-[48px] flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition-colors duration-150 text-slate-500 dark:text-slate-400 font-medium hover:text-slate-900 dark:hover:text-white press-effect';
       });
 
       document.querySelectorAll('.view-section').forEach(sec => sec.classList.add('hidden'));
@@ -1635,7 +1658,7 @@
         <button
           type="button"
           onclick="jumpToModule('${mod.id}')"
-          class="text-xs px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-850 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition font-medium"
+          class="min-h-[40px] shrink-0 text-xs px-3 py-2 rounded-lg bg-slate-100 dark:bg-slate-850 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-colors duration-150 font-medium press-effect"
         >
           ${mod.number.replace('Module ', 'M')}: ${mod.title.split('(')[0].trim()}
         </button>
@@ -1742,7 +1765,7 @@
         html += `
           <div class="flex items-center justify-between bg-slate-900 text-blue-300 font-mono text-xs sm:text-sm px-4 py-3 rounded-xl border border-slate-700">
             <span>${sec.codeExample}</span>
-            <button type="button" onclick="copyToClipboard('${sec.codeExample.replace(/\\/g, '\\\\')}')" class="text-xs px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 transition">
+            <button type="button" onclick="copyToClipboard('${sec.codeExample.replace(/\\/g, '\\\\')}')" aria-label="Copy path ${sec.codeExample}" class="min-h-[40px] min-w-[40px] text-xs px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 transition-colors duration-150 press-effect">
               Copy
             </button>
           </div>
@@ -1886,7 +1909,8 @@
               <button
                 type="button"
                 onclick="copyToClipboard('${item.cmd}')"
-                class="text-xs font-medium px-2.5 py-1 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition"
+                aria-label="Copy command ${item.cmd}"
+                class="min-h-[40px] min-w-[40px] text-xs font-medium px-3 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-colors duration-150 press-effect"
               >
                 Copy
               </button>
@@ -2187,7 +2211,7 @@
             onclick="jumpToQuestion(${q.id})"
             aria-label="Jump to question ${q.id}"
             title="Question ${q.id}: ${hasAnswered ? (showFeedback ? (isCorrect ? 'Correct' : 'Missed') : 'Answered') : 'Unanswered'}"
-            class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg border text-xs font-mono font-medium flex items-center justify-center transition-all press-effect ${btnStyle}"
+            class="min-w-[40px] min-h-[40px] w-10 h-10 rounded-xl border text-xs font-mono tabular-nums font-medium flex items-center justify-center transition-[transform,background-color,border-color,color] duration-150 press-effect ${btnStyle}"
           >
             ${q.id}
           </button>
@@ -2377,8 +2401,12 @@
     document.getElementById('modeImmediateBtn').addEventListener('click', () => {
       state.examMode = 'IMMEDIATE';
       state.simulationSubmitted = false;
-      document.getElementById('modeImmediateBtn').className = 'px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium bg-blue-600 text-white transition text-center';
-      document.getElementById('modeSimulationBtn').className = 'px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition text-center';
+      const immBtn = document.getElementById('modeImmediateBtn');
+      const simBtn = document.getElementById('modeSimulationBtn');
+      immBtn.setAttribute('aria-pressed', 'true');
+      simBtn.setAttribute('aria-pressed', 'false');
+      immBtn.className = 'min-h-[40px] px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium bg-blue-600 text-white transition-colors duration-150 text-center press-effect';
+      simBtn.className = 'min-h-[40px] px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors duration-150 text-center press-effect';
       document.getElementById('submitSimulationBtn').classList.add('hidden');
       renderExam();
     });
@@ -2386,8 +2414,12 @@
     document.getElementById('modeSimulationBtn').addEventListener('click', () => {
       state.examMode = 'SIMULATION';
       state.simulationSubmitted = false;
-      document.getElementById('modeSimulationBtn').className = 'px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium bg-blue-600 text-white transition text-center';
-      document.getElementById('modeImmediateBtn').className = 'px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition text-center';
+      const immBtn = document.getElementById('modeImmediateBtn');
+      const simBtn = document.getElementById('modeSimulationBtn');
+      simBtn.setAttribute('aria-pressed', 'true');
+      immBtn.setAttribute('aria-pressed', 'false');
+      simBtn.className = 'min-h-[40px] px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium bg-blue-600 text-white transition-colors duration-150 text-center press-effect';
+      immBtn.className = 'min-h-[40px] px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors duration-150 text-center press-effect';
       document.getElementById('submitSimulationBtn').classList.remove('hidden');
       renderExam();
     });
@@ -2437,14 +2469,18 @@
       compTableBtn.addEventListener('click', () => {
         document.getElementById('compTableView').classList.remove('hidden');
         document.getElementById('compCardsView').classList.add('hidden');
-        compTableBtn.className = 'px-2.5 py-1 text-xs font-semibold rounded-lg bg-blue-600 text-white transition press-effect';
-        compCardsBtn.className = 'px-2.5 py-1 text-xs font-medium rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition press-effect';
+        compTableBtn.setAttribute('aria-pressed', 'true');
+        compCardsBtn.setAttribute('aria-pressed', 'false');
+        compTableBtn.className = 'min-h-[40px] px-3 py-1.5 text-xs font-semibold rounded-lg bg-blue-600 text-white transition-colors duration-150 press-effect';
+        compCardsBtn.className = 'min-h-[40px] px-3 py-1.5 text-xs font-medium rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors duration-150 press-effect';
       });
       compCardsBtn.addEventListener('click', () => {
         document.getElementById('compTableView').classList.add('hidden');
         document.getElementById('compCardsView').classList.remove('hidden');
-        compCardsBtn.className = 'px-2.5 py-1 text-xs font-semibold rounded-lg bg-blue-600 text-white transition press-effect';
-        compTableBtn.className = 'px-2.5 py-1 text-xs font-medium rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition press-effect';
+        compCardsBtn.setAttribute('aria-pressed', 'true');
+        compTableBtn.setAttribute('aria-pressed', 'false');
+        compCardsBtn.className = 'min-h-[40px] px-3 py-1.5 text-xs font-semibold rounded-lg bg-blue-600 text-white transition-colors duration-150 press-effect';
+        compTableBtn.className = 'min-h-[40px] px-3 py-1.5 text-xs font-medium rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors duration-150 press-effect';
       });
     }
 
@@ -2466,7 +2502,7 @@
       });
     }
 
-    // Keyboard Shortcuts (Alt+1..4 for fast view switching, Space for card flip)
+    // Keyboard Shortcuts (Alt+1..4 for fast view switching, Space/Enter for card flip, ArrowLeft/Right for flashcard nav)
     document.addEventListener('keydown', (e) => {
       if (e.altKey && !e.ctrlKey && !e.metaKey) {
         if (e.key === '1') { switchTab('modules'); e.preventDefault(); }
@@ -2474,9 +2510,22 @@
         if (e.key === '3') { switchTab('flashcards'); e.preventDefault(); }
         if (e.key === '4') { switchTab('exam'); e.preventDefault(); }
       }
-      if (state.activeTab === 'flashcards' && e.code === 'Space' && document.activeElement.tagName !== 'SELECT' && document.activeElement.tagName !== 'INPUT') {
-        e.preventDefault();
-        flipCard();
+      const inInput = document.activeElement.tagName === 'SELECT' || document.activeElement.tagName === 'INPUT';
+      if (state.activeTab === 'flashcards' && !inInput) {
+        if (e.code === 'Space' || (e.code === 'Enter' && document.activeElement.id === 'flashcardStage')) {
+          e.preventDefault();
+          flipCard();
+        } else if (e.code === 'ArrowRight') {
+          e.preventDefault();
+          state.fcFlipped = false;
+          state.fcCurrentPos += 1;
+          renderFlashcards();
+        } else if (e.code === 'ArrowLeft') {
+          e.preventDefault();
+          state.fcFlipped = false;
+          state.fcCurrentPos -= 1;
+          renderFlashcards();
+        }
       }
     });
 
